@@ -56,6 +56,7 @@ public class VentanaPacientes  {
 	 */
 	public VentanaPacientes() {
 		initialize();
+		//Revisiando que el brach funciona.
 		micontroladorpaciente =  new controladorPaciente(this);
 	}
 
