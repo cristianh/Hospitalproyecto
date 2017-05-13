@@ -87,7 +87,6 @@ public class controladorPaciente implements ActionListener {
 			this.ventanapaciente.JTFPesoPaciente.setText(Float.toString(miPaciente.getPesoPaciente()));
 			this.ventanapaciente.JTFNumeroDocumentoPaciente.setText(miPaciente.getNumeroDocumentoPaciente());
 			this.ventanapaciente.JTFTelefonoPaciente.setText(miPaciente.getTelefonoPaciente());
-			System.out.println(Integer.parseInt(miPaciente.getTipodocumento().getIdTipoDocumento()));
 		} catch (Exception e) {
 			System.out.println("Mensaje" + e.getLocalizedMessage());
 		}
@@ -101,6 +100,10 @@ public class controladorPaciente implements ActionListener {
 		this.ventanapaciente.JTFPesoPaciente.setText("");
 		this.ventanapaciente.JTFNumeroDocumentoPaciente.setText("");
 		this.ventanapaciente.JTFTelefonoPaciente.setText("");
+		this.ventanapaciente.JCBGeneroPaciente.setSelectedIndex(0);
+		this.ventanapaciente.JCBMunicipioPaciente.setSelectedIndex(0);
+		this.ventanapaciente.JCBTipoDocumentoPaciente.setSelectedIndex(0);
+		((JTextField) this.ventanapaciente.dateChooser.getDateEditor().getUiComponent()).setText("");
 	}
 
 	public boolean verificarformulario() {
@@ -139,8 +142,6 @@ public class controladorPaciente implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent evento) {
 		// TODO Auto-generated method stub
-		// micontroladorpaciente.crearPaciente();
-		System.out.println(evento.getActionCommand());
 		switch (evento.getActionCommand()) {
 		case "REGISTRAR":
 			if (verificarformulario() && verificarCombo()) {
@@ -185,11 +186,6 @@ public class controladorPaciente implements ActionListener {
 				} catch (Exception e1) {
 
 				}
-				ventanapaciente.JCBGeneroPaciente.setSelectedIndex(0);
-				ventanapaciente.JCBMunicipioPaciente.setSelectedIndex(0);
-				ventanapaciente.JCBTipoDocumentoPaciente.setSelectedIndex(0);
-				((JTextField) ventanapaciente.dateChooser.getDateEditor().getUiComponent()).setText("");
-				// ventanapaciente.dateChooser.setDate(null);
 				Limpiarformulario();
 			} 
 
@@ -219,11 +215,6 @@ public class controladorPaciente implements ActionListener {
 		case "ELIMINAR":
 			try {
 				Midao.eliminar(ventanapaciente.JTFNumeroDocumentoPaciente.getText());
-				ventanapaciente.JCBGeneroPaciente.setSelectedIndex(0);
-				ventanapaciente.JCBMunicipioPaciente.setSelectedIndex(0);
-				ventanapaciente.JCBTipoDocumentoPaciente.setSelectedIndex(0);
-				((JTextField) ventanapaciente.dateChooser.getDateEditor().getUiComponent()).setText("");
-
 				Limpiarformulario();
 				JOptionPane.showMessageDialog(null, "Usuario eliminado", "Info", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
@@ -254,10 +245,6 @@ public class controladorPaciente implements ActionListener {
 					municipio, genero);
 			try {
 				Midao.actualizar(nuevo_paciente);
-				ventanapaciente.JCBGeneroPaciente.setSelectedIndex(0);
-				ventanapaciente.JCBMunicipioPaciente.setSelectedIndex(0);
-				ventanapaciente.JCBTipoDocumentoPaciente.setSelectedIndex(0);
-				((JTextField) ventanapaciente.dateChooser.getDateEditor().getUiComponent()).setText("");
 				Limpiarformulario();
 				JOptionPane.showMessageDialog(null, "Usuario actualizado", "Info", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {

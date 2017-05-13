@@ -70,6 +70,7 @@ public class Medico implements Serializable {
 	/** The set of salida_medico. */
 	//private Set<SalidaMedico> salidaMedicoSet;
 
+	
 	/**
 	 * Constructor.
 	 */
@@ -82,6 +83,36 @@ public class Medico implements Serializable {
 		//this.formulaSet = new HashSet<Formula>();
 		//this.incapacidadSet = new HashSet<Incapacidad>();
 		//this.salidaMedicoSet = new HashSet<SalidaMedico>();
+	}
+	
+	
+	/**
+	 * 
+	 * @param idMedico
+	 * @param nombreMedico
+	 * @param apellidoMedico
+	 * @param telefonoMedico
+	 * @param direccionMedico
+	 * @param emailMedico
+	 * @param telefonoEmergenciaMedico
+	 * @param fechaNacimientoMedico
+	 * @param numeroDocumentoMedico
+	 * @param tipodocumento
+	 */
+	public Medico(String idMedico, String nombreMedico, String apellidoMedico, String telefonoMedico,
+			String direccionMedico, String emailMedico, String telefonoEmergenciaMedico, Date fechaNacimientoMedico,
+			String numeroDocumentoMedico, Tipodocumento tipodocumento) {
+		super();
+		this.idMedico = idMedico;
+		this.nombreMedico = nombreMedico;
+		this.apellidoMedico = apellidoMedico;
+		this.telefonoMedico = telefonoMedico;
+		this.direccionMedico = direccionMedico;
+		this.emailMedico = emailMedico;
+		this.telefonoEmergenciaMedico = telefonoEmergenciaMedico;
+		this.fechaNacimientoMedico = fechaNacimientoMedico;
+		this.numeroDocumentoMedico = numeroDocumentoMedico;
+		this.tipodocumento = tipodocumento;
 	}
 
 	/**

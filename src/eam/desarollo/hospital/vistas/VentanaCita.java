@@ -25,7 +25,7 @@ public class VentanaCita {
 			public void run() {
 				try {
 					VentanaCita window = new VentanaCita();
-					//window.frame.setVisible(true);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

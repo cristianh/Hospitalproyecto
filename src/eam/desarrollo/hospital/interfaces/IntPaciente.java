@@ -1,5 +1,7 @@
 package eam.desarrollo.hospital.interfaces;
 
+import java.util.ArrayList;
+
 import eam.desarrollo.hospital.entidades.Paciente;
 
 
@@ -9,5 +11,5 @@ public interface IntPaciente {
 	public abstract Paciente buscar(String identificacion) throws Exception;
 	public abstract void eliminar(String id) throws Exception;
 	public abstract void actualizar(Paciente paciente) throws Exception;
-	public void listarPaciente(Paciente paciente);
+	public ArrayList<Paciente> listarPaciente();
 }
