@@ -22,6 +22,13 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.TitledBorder;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerListModel;
 
 public class VentanaCita {
 
@@ -55,55 +62,50 @@ public class VentanaCita {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblApellido_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		JTFApellidoMedico.setEnabled(false);
-		JTFApellidoMedico.setColumns(10);
-		JTFNombreMedico.setEnabled(false);
-		JTFNombreMedico.setColumns(10);
 		frmVentanaCitas = new JFrame();
 		frmVentanaCitas.setIconImage(Toolkit.getDefaultToolkit().getImage("../Imagenes\\bloc.png"));
 		frmVentanaCitas.setTitle("Ventana CItas");
 		frmVentanaCitas.setBounds(100, 100, 791, 451);
 		frmVentanaCitas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmVentanaCitas.getContentPane().setLayout(null);
-		
+
 		JPanel JpanelPaciente = new JPanel();
-		JpanelPaciente.setBorder(new TitledBorder(null, "Datos Paciente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		JpanelPaciente.setBounds(21, 49, 361, 223);
+		JpanelPaciente.setBorder(
+				new TitledBorder(null, "Datos Paciente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		JpanelPaciente.setBounds(21, 83, 361, 247);
 		frmVentanaCitas.getContentPane().add(JpanelPaciente);
-		
-				JLabel lblPaciente = new JLabel("Id paciente");
-				lblPaciente.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		JTFPaciente.setEditable(false);
-		JTFPaciente.setColumns(10);
-		
+
+		JLabel lblPaciente = new JLabel("Id paciente");
+		lblPaciente.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JTFIdPaciente.setEditable(false);
+		JTFIdPaciente.setColumns(10);
+
 		JLabel lblNewLabel = new JLabel("Nombre ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		JTFNombre = new JTextField();
 		JTFNombre.setEditable(false);
 		JTFNombre.setColumns(10);
-		
+
 		JTFApellido = new JTextField();
 		JTFApellido.setEditable(false);
 		JTFApellido.setColumns(10);
-		
+
 		JLabel lblApellido = new JLabel("Apellido");
 		lblApellido.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Documento");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
+
+		JTFDocumentoPaciente = new JTextField();
+		JTFDocumentoPaciente.setColumns(10);
 		GroupLayout gl_JpanelPaciente = new GroupLayout(JpanelPaciente);
 		gl_JpanelPaciente.setHorizontalGroup(
-			gl_JpanelPaciente.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_JpanelPaciente.createSequentialGroup()
+			gl_JpanelPaciente.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_JpanelPaciente.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_JpanelPaciente.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_JpanelPaciente.createSequentialGroup()
+					.addGroup(gl_JpanelPaciente.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_JpanelPaciente.createSequentialGroup()
 							.addGroup(gl_JpanelPaciente.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblPaciente)
 								.addComponent(lblNewLabel)
@@ -112,13 +114,13 @@ public class VentanaCita {
 							.addGroup(gl_JpanelPaciente.createParallelGroup(Alignment.LEADING)
 								.addComponent(JTFApellido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(JTFNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(JTFPaciente, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, gl_JpanelPaciente.createSequentialGroup()
-							.addComponent(lblNewLabel_1)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnBuscarPaciente, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE))
+								.addComponent(JTFIdPaciente, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_JpanelPaciente.createParallelGroup(Alignment.TRAILING)
+							.addComponent(btnBuscarPaciente, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_JpanelPaciente.createSequentialGroup()
+								.addComponent(lblNewLabel_1)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(JTFDocumentoPaciente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 					.addGap(128))
 		);
 		gl_JpanelPaciente.setVerticalGroup(
@@ -130,7 +132,7 @@ public class VentanaCita {
 							.addComponent(lblPaciente))
 						.addGroup(gl_JpanelPaciente.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(JTFPaciente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(JTFIdPaciente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_JpanelPaciente.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel)
@@ -142,54 +144,34 @@ public class VentanaCita {
 					.addGap(27)
 					.addGroup(gl_JpanelPaciente.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_1)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-					.addComponent(btnBuscarPaciente))
+						.addComponent(JTFDocumentoPaciente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(btnBuscarPaciente)
+					.addContainerGap(36, Short.MAX_VALUE))
 		);
-		gl_JpanelPaciente.linkSize(SwingConstants.HORIZONTAL, new Component[] {JTFPaciente, JTFNombre, JTFApellido, textField_2});
+		gl_JpanelPaciente.linkSize(SwingConstants.HORIZONTAL, new Component[] {JTFIdPaciente, JTFNombre, JTFApellido, JTFDocumentoPaciente});
 		JpanelPaciente.setLayout(gl_JpanelPaciente);
-		JpanelMedico.setBorder(new TitledBorder(null, "Medico", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		JpanelMedico.setBounds(422, 49, 310, 223);
-		
+		JpanelMedico.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Medicos",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		JpanelMedico.setBounds(422, 83, 310, 247);
+
 		frmVentanaCitas.getContentPane().add(JpanelMedico);
-						JTFIdMedico.setEnabled(false);
-						JTFIdMedico.setColumns(10);
-						
-								JLabel lblMedico = new JLabel("Id medico");
-								lblMedico.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		JTableMedicocita.setCellSelectionEnabled(true);
+		JTableMedicocita.setColumnSelectionAllowed(true);
 		GroupLayout gl_JpanelMedico = new GroupLayout(JpanelMedico);
-		gl_JpanelMedico.setHorizontalGroup(
-			gl_JpanelMedico.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_JpanelMedico.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_JpanelMedico.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblMedico)
-						.addComponent(lblNombre)
-						.addComponent(lblApellido_1))
-					.addGap(18)
-					.addGroup(gl_JpanelMedico.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(JTFApellidoMedico, GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-						.addComponent(JTFNombreMedico)
-						.addComponent(JTFIdMedico))
-					.addContainerGap(32, Short.MAX_VALUE))
-		);
-		gl_JpanelMedico.setVerticalGroup(
-			gl_JpanelMedico.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_JpanelMedico.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_JpanelMedico.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblMedico)
-						.addComponent(JTFIdMedico, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_JpanelMedico.createParallelGroup(Alignment.BASELINE)
-						.addComponent(JTFNombreMedico, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNombre))
-					.addGap(18)
-					.addGroup(gl_JpanelMedico.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblApellido_1)
-						.addComponent(JTFApellidoMedico, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(99, Short.MAX_VALUE))
-		);
+		gl_JpanelMedico
+				.setHorizontalGroup(gl_JpanelMedico.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_JpanelMedico.createSequentialGroup().addContainerGap()
+								.addComponent(JTableMedicocita, GroupLayout.PREFERRED_SIZE, 281,
+										GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		gl_JpanelMedico
+				.setVerticalGroup(gl_JpanelMedico.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_JpanelMedico.createSequentialGroup().addContainerGap()
+								.addComponent(JTableMedicocita, GroupLayout.PREFERRED_SIZE, 185,
+										GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		JpanelMedico.setLayout(gl_JpanelMedico);
 
 		JLabel lblNumero = new JLabel("Numero");
@@ -198,60 +180,80 @@ public class VentanaCita {
 		frmVentanaCitas.getContentPane().add(lblNumero);
 		JTFIdcita.setBounds(79, 18, 69, 20);
 		JTFIdcita.setColumns(10);
-		
+
 		frmVentanaCitas.getContentPane().add(JTFIdcita);
 
 		btnRegistrar.setIcon(
 				new ImageIcon("C:\\Users\\Casa1\\Documents\\GitHub\\Hospitalproyecto\\Imagenes\\usuario (3).png"));
-		btnRegistrar.setBounds(63, 341, 123, 38);
+		btnRegistrar.setBounds(62, 352, 123, 38);
 		frmVentanaCitas.getContentPane().add(btnRegistrar);
 
 		btnActualizar.setIcon(
 				new ImageIcon("C:\\Users\\Casa1\\Documents\\GitHub\\Hospitalproyecto\\Imagenes\\usuario (1).png"));
-		btnActualizar.setBounds(422, 341, 123, 38);
+		btnActualizar.setBounds(421, 352, 123, 38);
 		frmVentanaCitas.getContentPane().add(btnActualizar);
 
 		btnBuscar.setIcon(
 				new ImageIcon("C:\\Users\\Casa1\\Documents\\GitHub\\Hospitalproyecto\\Imagenes\\usuario (2).png"));
-		btnBuscar.setBounds(246, 341, 116, 38);
+		btnBuscar.setBounds(245, 352, 116, 38);
 		frmVentanaCitas.getContentPane().add(btnBuscar);
-		btnEliminar.setIcon(new ImageIcon("C:\\Users\\Casa1\\Documents\\GitHub\\Hospitalproyecto\\Imagenes\\usuario.png"));
-		btnEliminar.setBounds(605, 341, 112, 39);
-		
+		btnEliminar
+				.setIcon(new ImageIcon("C:\\Users\\Casa1\\Documents\\GitHub\\Hospitalproyecto\\Imagenes\\usuario.png"));
+		btnEliminar.setBounds(604, 352, 112, 39);
+
 		frmVentanaCitas.getContentPane().add(btnEliminar);
-		Fecha.setBounds(199, 18, 81, 20);
+		Fecha.setBounds(354, 52, 112, 20);
 		frmVentanaCitas.getContentPane().add(Fecha);
+
+		JLabel lblFecha = new JLabel("Fecha");
+		lblFecha.setBounds(313, 53, 36, 17);
+		frmVentanaCitas.getContentPane().add(lblFecha);
+		lblFecha.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JCBEstado.setBounds(239, 18, 86, 20);
+		frmVentanaCitas.getContentPane().add(JCBEstado);
+
+		JLabel lblEstado = new JLabel("Estado");
+		lblEstado.setBounds(187, 18, 42, 17);
+		frmVentanaCitas.getContentPane().add(lblEstado);
+		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JCBConsultorio.setBounds(448, 18, 78, 20);
+		frmVentanaCitas.getContentPane().add(JCBConsultorio);
+
+		JLabel lblConsultorio = new JLabel("Consultorio");
+		lblConsultorio.setBounds(369, 18, 69, 17);
+		frmVentanaCitas.getContentPane().add(lblConsultorio);
+		lblConsultorio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		JCBTipo.setBounds(602, 18, 78, 20);
+		frmVentanaCitas.getContentPane().add(JCBTipo);
+
+		JLabel lblTipo = new JLabel("Tipo");
+		lblTipo.setBounds(566, 18, 26, 17);
+		frmVentanaCitas.getContentPane().add(lblTipo);
+		lblTipo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-				JLabel lblFecha = new JLabel("Fecha");
-				lblFecha.setBounds(158, 19, 36, 17);
-				frmVentanaCitas.getContentPane().add(lblFecha);
-				lblFecha.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				JCBEstado.setBounds(355, 18, 86, 20);
-				frmVentanaCitas.getContentPane().add(JCBEstado);
-				
-						JLabel lblEstado = new JLabel("Estado");
-						lblEstado.setBounds(303, 18, 42, 17);
-						frmVentanaCitas.getContentPane().add(lblEstado);
-						lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 14));
-						JCBConsultorio.setBounds(545, 19, 78, 20);
-						frmVentanaCitas.getContentPane().add(JCBConsultorio);
-						
-								JLabel lblConsultorio = new JLabel("Consultorio");
-								lblConsultorio.setBounds(466, 19, 69, 17);
-								frmVentanaCitas.getContentPane().add(lblConsultorio);
-								lblConsultorio.setFont(new Font("Tahoma", Font.PLAIN, 14));
-								JCBTipo.setBounds(687, 19, 78, 20);
-								frmVentanaCitas.getContentPane().add(JCBTipo);
-								
-										JLabel lblTipo = new JLabel("Tipo");
-										lblTipo.setBounds(651, 19, 26, 17);
-										frmVentanaCitas.getContentPane().add(lblTipo);
-										lblTipo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel lblHora = new JLabel("Hora");
+		lblHora.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblHora.setBounds(21, 52, 46, 20);
+		frmVentanaCitas.getContentPane().add(lblHora);
+		
+		JSPHora1.setModel(new SpinnerListModel(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30"}));
+		JSPHora1.setBounds(79, 52, 69, 20);
+		frmVentanaCitas.getContentPane().add(JSPHora1);
+		
+		JLabel lblA = new JLabel("a");
+		lblA.setHorizontalAlignment(SwingConstants.CENTER);
+		lblA.setBounds(148, 52, 46, 20);
+		frmVentanaCitas.getContentPane().add(lblA);
+		
+		
+		JSPHora2.setModel(new SpinnerListModel(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30"}));
+		JSPHora2.setBounds(199, 52, 69, 20);
+		frmVentanaCitas.getContentPane().add(JSPHora2);
 	}
 
 	public static controladorCita micontroladorCita;
-	public JTextField JTFPaciente = new JTextField();
-	public JTextField JTFIdMedico = new JTextField();
+	public JTextField JTFIdPaciente = new JTextField();
 	public JButton btnBuscar = new JButton("Buscar");
 	public JButton btnActualizar = new JButton("Actualizar");
 	public JButton btnRegistrar = new JButton("Registrar");
@@ -262,12 +264,11 @@ public class VentanaCita {
 	public JComboBox JCBEstado = new JComboBox();
 	public JButton btnEliminar = new JButton("Eliminar");
 	public JTextField JTFIdcita = new JTextField();
-	private JTextField JTFNombre;
-	private JTextField JTFApellido;
-	private JTextField textField_2;
+	public JTextField JTFNombre;
+	public JTextField JTFApellido;
+	public JTextField JTFDocumentoPaciente;
 	private final JPanel JpanelMedico = new JPanel();
-	private final JTextField JTFNombreMedico = new JTextField();
-	private final JLabel lblNombre = new JLabel("Nombre");
-	private final JLabel lblApellido_1 = new JLabel("Apellido");
-	private final JTextField JTFApellidoMedico = new JTextField();
+	public JTable JTableMedicocita= new JTable();
+	public JSpinner JSPHora2 = new JSpinner();
+	public JSpinner JSPHora1 = new JSpinner();
 }

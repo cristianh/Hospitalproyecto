@@ -226,7 +226,6 @@ public class controladorConsultorio implements ActionListener,MouseListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override

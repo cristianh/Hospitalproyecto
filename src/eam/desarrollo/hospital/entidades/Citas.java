@@ -19,6 +19,8 @@ public class Citas implements Serializable {
 	
 	/** Fecha_cita. */
 	private Date fechaCita;
+	
+	
 
 	/** idProfesional. */
 	private Integer idprofesional;
@@ -29,16 +31,24 @@ public class Citas implements Serializable {
 	/** Hora_cita. */
 	private String hora_cita;
 
-	
-	public Citas(Integer IdCita, Date fechaCita,String hora,Integer idprofesional, Integer idCliente) {
+	/**
+	 * 
+	 * @param idcita
+	 * @param fechaCita
+	 * @param idprofesional
+	 * @param idCliente
+	 * @param hora_cita
+	 */
+	public Citas(Integer idcita, Date fechaCita, Integer idprofesional, Integer idCliente, String hora_cita) {
 		super();
-		this.Idcita = IdCita;
+		Idcita = idcita;
 		this.fechaCita = fechaCita;
-		this.hora_cita = hora;
 		this.idprofesional = idprofesional;
 		this.idCliente = idCliente;
+		this.hora_cita = hora_cita;
 	}
-	
+
+
 
 	public Integer getIdcita() {
 		return Idcita;

@@ -21,6 +21,9 @@ public class Cita implements Serializable {
 
 	/** fecha_cita. */
 	private Date fechaCita;
+	
+	/** Hora_cita. */
+	private String HoraCita;
 
 	/** paciente. */
 	private Paciente paciente;
@@ -45,16 +48,19 @@ public class Cita implements Serializable {
 	 * 
 	 * @param idCita
 	 * @param fechaCita
+	 * @param horaCita
 	 * @param paciente
 	 * @param tipoCita
 	 * @param estadoCita
 	 * @param consultorio
 	 * @param medico
 	 */
-	public Cita(String idCita, Date fechaCita, Paciente paciente, TipoCita tipoCita, EstadoCita estadoCita,
-			Consultorio consultorio, Medico medico) {
+	public Cita(String idCita, Date fechaCita, String horaCita, Paciente paciente, TipoCita tipoCita,
+			EstadoCita estadoCita, Consultorio consultorio, Medico medico) {
+		super();
 		this.idCita = idCita;
 		this.fechaCita = fechaCita;
+		HoraCita = horaCita;
 		this.paciente = paciente;
 		this.tipoCita = tipoCita;
 		this.estadoCita = estadoCita;
@@ -62,7 +68,21 @@ public class Cita implements Serializable {
 		this.medico = medico;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public String getHoraCita() {
+		return HoraCita;
+	}
 
+	/**
+	 * 
+	 * @param horaCita
+	 */
+	public void setHoraCita(String horaCita) {
+		HoraCita = horaCita;
+	}
 
 
 	/**
