@@ -17,6 +17,11 @@ import eam.desarrollo.hospital.entidades.EstadoConsultorio;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaConsultorio {
 
@@ -44,14 +49,6 @@ public class VentanaConsultorio {
 	 */
 	public VentanaConsultorio() throws Exception {
 		initialize();
-		/*String estado = "Ocupado";
-		
-
-		String consultorio = "004";
-		String descripcion = "Hola";
-		estado_consultorio = new EstadoConsultorio("0",estado);
-		nuevo_consultorio = new Consultorio(consultorio,descripcion,estado_consultorio);
-		Midaoconsultorio.crear(nuevo_consultorio);*/
 		micontroladorconsultorio =  new controladorConsultorio(this);
 	}
 	
@@ -61,54 +58,67 @@ public class VentanaConsultorio {
 	private void initialize() {
 		frmConsultorios = new JFrame();
 		frmConsultorios.setTitle("Consultorios");
-		frmConsultorios.setBounds(100, 100, 298, 247);
+		frmConsultorios.setBounds(100, 100, 563, 370);
 		frmConsultorios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmConsultorios.getContentPane().setLayout(null);
 		
 		
-		lblConsultorio.setBounds(10, 11, 61, 14);
+		lblConsultorio.setBounds(10, 24, 86, 14);
 		frmConsultorios.getContentPane().add(lblConsultorio);
 		
 		
-		lblNewLabel.setBounds(10, 81, 61, 14);
+		lblNewLabel.setBounds(10, 81, 74, 14);
 		frmConsultorios.getContentPane().add(lblNewLabel);
 		
 		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setBounds(10, 36, 46, 14);
+		lblEstado.setBounds(214, 21, 46, 14);
 		frmConsultorios.getContentPane().add(lblEstado);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"SELECIONE"}));
 		
 		
-		comboBox.setBounds(66, 33, 61, 20);
+		comboBox.setBounds(270, 18, 211, 20);
 		frmConsultorios.getContentPane().add(comboBox);
-		btnRegistrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		
 		
-		btnRegistrar.setBounds(38, 174, 89, 23);
+		
+		btnRegistrar.setBounds(38, 298, 89, 23);
 		frmConsultorios.getContentPane().add(btnRegistrar);
 		
 		
-		btnBuscar.setBounds(38, 140, 89, 23);
+		btnBuscar.setBounds(419, 298, 89, 23);
 		frmConsultorios.getContentPane().add(btnBuscar);
 		
 		
-		btnActualizar.setBounds(146, 140, 89, 23);
+		btnActualizar.setBounds(292, 298, 105, 23);
 		frmConsultorios.getContentPane().add(btnActualizar);
 		
 		
-		btnEliminar.setBounds(146, 174, 89, 23);
+		btnEliminar.setBounds(165, 298, 89, 23);
 		frmConsultorios.getContentPane().add(btnEliminar);
 		
 		
-		textPane.setBounds(81, 67, 177, 48);
+		textPane.setBounds(81, 67, 456, 48);
 		frmConsultorios.getContentPane().add(textPane);
-		
-		
-		JTFConsultorio.setBounds(66, 8, 86, 20);
+		JTFConsultorio.setBounds(106, 21, 86, 20);
 		frmConsultorios.getContentPane().add(JTFConsultorio);
 		JTFConsultorio.setColumns(10);
+		JTBConsultorio.setCellSelectionEnabled(true);
+		JTBConsultorio.setColumnSelectionAllowed(true);
+		
+		JTBConsultorio.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Id consultorio", "descripcion consultorio", "estado"
+			}
+		));
+		
+		
+		JTBConsultorio.setBounds(10, 162, 527, 89);
+		frmConsultorios.getContentPane().add(JTBConsultorio);
+		btnActualizarTabla.setBounds(392, 262, 145, 23);
+		
+		frmConsultorios.getContentPane().add(btnActualizarTabla);
 	}
 	
 	private JFrame frmConsultorios;
@@ -126,4 +136,6 @@ public class VentanaConsultorio {
 	public DAOConsultorio Midaoconsultorio = new DAOConsultorio();
 	public Consultorio nuevo_consultorio = null;
 	public EstadoConsultorio estado_consultorio = null;
+	public JTable JTBConsultorio = new JTable();
+	public JButton btnActualizarTabla = new JButton("Actualizar Tabla");
 }

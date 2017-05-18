@@ -30,6 +30,20 @@ public class EstadoCita implements Serializable {
 	public EstadoCita() {
 		this.citaSet = new HashSet<Cita>();
 	}
+	
+	
+	/**
+	 * 
+	 * @param idEstadoCita
+	 * @param descripcionEstadoCita
+	 */
+	public EstadoCita(String idEstadoCita, String descripcionEstadoCita) {
+		super();
+		this.idEstadoCita = idEstadoCita;
+		this.descripcionEstadoCita = descripcionEstadoCita;
+	}
+
+
 
 	/**
 	 * Set the id_estado_cita.

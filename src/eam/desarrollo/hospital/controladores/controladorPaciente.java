@@ -35,9 +35,7 @@ public class controladorPaciente implements ActionListener {
 	public ArrayList<Genero> listaGene;
 	public ArrayList<Municipio> listaMunici;
 
-	public static void main(String[] args) {
-
-	}
+	
 
 	public controladorPaciente(VentanaPacientes venpaciente) {
 		// TODO Auto-generated constructor stub

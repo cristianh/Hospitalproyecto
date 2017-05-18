@@ -39,13 +39,31 @@ public class Cita implements Serializable {
 
 	/** The set of historia. */
 	private Set<Historia> historiaSet;
-
+	
+	
 	/**
-	 * Constructor.
+	 * 
+	 * @param idCita
+	 * @param fechaCita
+	 * @param paciente
+	 * @param tipoCita
+	 * @param estadoCita
+	 * @param consultorio
+	 * @param medico
 	 */
-	public Cita() {
-		this.historiaSet = new HashSet<Historia>();
+	public Cita(String idCita, Date fechaCita, Paciente paciente, TipoCita tipoCita, EstadoCita estadoCita,
+			Consultorio consultorio, Medico medico) {
+		this.idCita = idCita;
+		this.fechaCita = fechaCita;
+		this.paciente = paciente;
+		this.tipoCita = tipoCita;
+		this.estadoCita = estadoCita;
+		this.consultorio = consultorio;
+		this.medico = medico;
 	}
+
+
+
 
 	/**
 	 * Set the id_cita.
@@ -245,17 +263,7 @@ public class Cita implements Serializable {
 		return true;
 	}
 
-	public Cita(String idCita, Date fechaCita, Paciente paciente, TipoCita tipoCita, EstadoCita estadoCita,
-			Consultorio consultorio, Medico medico) {
-		super();
-		this.idCita = idCita;
-		this.fechaCita = fechaCita;
-		this.paciente = paciente;
-		this.tipoCita = tipoCita;
-		this.estadoCita = estadoCita;
-		this.consultorio = consultorio;
-		this.medico = medico;
-	}
+
 	
 	
 

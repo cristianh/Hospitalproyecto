@@ -2,6 +2,7 @@ package eam.desarrollo.hospital.DAO;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -11,6 +12,7 @@ import eam.desarrollo.hospital.conexion.Conexion;
 import eam.desarrollo.hospital.entidades.Cita;
 import eam.desarrollo.hospital.entidades.Consultorio;
 import eam.desarrollo.hospital.entidades.EstadoConsultorio;
+import eam.desarrollo.hospital.entidades.TipoCita;
 import eam.desarrollo.hospital.interfaces.IntCita;
 
 public class DAOCita implements IntCita {
@@ -132,6 +134,32 @@ public class DAOCita implements IntCita {
 	@Override
 	public void listarPaciente(Cita paciente) {
 		// TODO Auto-generated method stub
+
+	}
+	
+	public ArrayList<TipoCita> listarEstadoConsul() {
+		TipoCita estado = null;
+		ArrayList<TipoCita> listTipoCita = new ArrayList<>();
+		// Tipodocumento tipDocumento;
+		try {
+
+			String sql = "SELECT * FROM tipo_cita ";
+			Connection con = Conexion.getConexion();
+			java.sql.PreparedStatement stm = con.prepareStatement(sql);
+			java.sql.ResultSet rs = stm.executeQuery();
+			
+			while (rs.next()) {
+				estado = new TipoCita(rs.getString("id_tipo_cita"),
+						rs.getString("descripcion_tipo_cita"));
+				listTipoCita.add(estado);
+
+			}
+
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+
+		return listTipoCita;
 
 	}
 

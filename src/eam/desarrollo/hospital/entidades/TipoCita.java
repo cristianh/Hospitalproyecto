@@ -25,6 +25,17 @@ public class TipoCita implements Serializable {
 	private Set<Cita> citaSet;
 
 	/**
+	 * 
+	 * @param idTipoCita
+	 * @param descripcionTipoCita
+	 */
+	public TipoCita(String idTipoCita, String descripcionTipoCita) {
+		super();
+		this.idTipoCita = idTipoCita;
+		this.descripcionTipoCita = descripcionTipoCita;
+	}
+
+	/**
 	 * Constructor.
 	 */
 	public TipoCita() {
