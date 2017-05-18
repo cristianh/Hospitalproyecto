@@ -14,9 +14,13 @@ import javax.swing.table.DefaultTableModel;
 
 import org.w3c.dom.events.MouseEvent;
 
+import com.mysql.jdbc.Connection;
+
 import eam.desarollo.hospital.vistas.VentanaConsultorio;
 import eam.desarrollo.hospital.DAO.DAOConsultorio;
+import eam.desarrollo.hospital.conexion.Conexion;
 import eam.desarrollo.hospital.entidades.Consultorio;
+import eam.desarrollo.hospital.entidades.EstadoCita;
 import eam.desarrollo.hospital.entidades.EstadoConsultorio;
 import eam.desarrollo.hospital.entidades.Genero;
 import eam.desarrollo.hospital.entidades.Municipio;
@@ -181,6 +185,8 @@ public class controladorConsultorio implements ActionListener,MouseListener {
 		this.ventanaconsultorio.textPane.setText("");
 		CargarTabla();
 	}
+	
+
 
 	public boolean verificarformulario() {
 

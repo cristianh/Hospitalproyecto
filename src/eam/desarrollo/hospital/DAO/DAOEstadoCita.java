@@ -124,7 +124,7 @@ public class DAOEstadoCita implements IntEstadoCita {
 	}
 
 	@Override
-	public ArrayList<EstadoCita> listarEstadoCita(EstadoCita estadocita) {
+	public ArrayList<EstadoCita> listarEstadoCita() {
 		// TODO Auto-generated method stub
 		EstadoCita estadocitaob = null;
 		ArrayList<EstadoCita> listEstadocita = new ArrayList<>();
@@ -137,8 +137,8 @@ public class DAOEstadoCita implements IntEstadoCita {
 			java.sql.ResultSet rs = stm.executeQuery();
 			
 			while (rs.next()) {
-				estadocitaob = new EstadoCita(rs.getString("id_estado_consultorio"),
-						rs.getString("descripcion_estado_consultorio"));
+				estadocitaob = new EstadoCita(rs.getString("id_estado_cita"),
+						rs.getString("descripcion_estado_cita"));
 				listEstadocita.add(estadocitaob);
 
 			}

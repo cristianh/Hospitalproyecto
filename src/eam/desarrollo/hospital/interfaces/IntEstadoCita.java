@@ -10,5 +10,5 @@ public interface IntEstadoCita {
 	public abstract EstadoCita buscar(String numerocita) throws Exception;
 	public abstract void eliminar(String idEstadiCita) throws Exception;
 	public abstract void actualizar(EstadoCita cita) throws Exception;
-	public ArrayList<EstadoCita> listarEstadoCita(EstadoCita estadocita);
+	public ArrayList<EstadoCita> listarEstadoCita();
 }

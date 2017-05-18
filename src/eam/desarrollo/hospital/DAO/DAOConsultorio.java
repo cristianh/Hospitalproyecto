@@ -130,6 +130,32 @@ public class DAOConsultorio implements IntConsultorio {
 		}
 
 	}
+	
+	public ArrayList<Consultorio> listarConsultorioCita() {
+		// TODO Auto-generated method stub
+		Consultorio consultorio = null;
+		ArrayList<Consultorio> listConsultorio = new ArrayList<>();
+		// Tipodocumento tipDocumento;
+		try {
+
+			String sql = "SELECT  co.id_consultorio,co.descripcion_consultorio,co.id_estado_consultorio,es.descripcion_estado_consultorio from consultorio as co join estado_consultorio as es on co.id_estado_consultorio = es.id_estado_consultorio";
+			Connection con = Conexion.getConexion();
+			java.sql.PreparedStatement stm = con.prepareStatement(sql);
+			java.sql.ResultSet rs = stm.executeQuery();
+			
+			while (rs.next()) {
+				consultorio = new Consultorio(rs.getString("id_consultorio"),
+						rs.getString("descripcion_consultorio"),new EstadoConsultorio(rs.getString("id_estado_consultorio"),rs.getString("descripcion_consultorio")));
+				listConsultorio.add(consultorio);
+
+			}
+
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+
+		return listConsultorio;
+	}
 
 	@Override
 	public java.sql.ResultSet listarConsultorio() {

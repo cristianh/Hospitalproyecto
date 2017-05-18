@@ -36,6 +36,8 @@ public class controladorCita implements ActionListener{
 	public DAOEstadoCita MidaoEstadoCita = new DAOEstadoCita();
 	public DAOConsultorio MidaoConsultorio = new DAOConsultorio();
 	public ArrayList<TipoCita> listartipoCita;
+	public ArrayList<EstadoCita> listarEstadoCita;
+	public ArrayList<Consultorio> listarConsultorio;
 	
 	
 	
@@ -46,6 +48,8 @@ public class controladorCita implements ActionListener{
 	public controladorCita(VentanaCita ventanacita) {
 		this.ventanacita = ventanacita;
 		listarTipoCita();
+		listarEstadoCita();
+		listarConsultorios();
 	}
 	
 	private void listenerbotones() {
@@ -76,7 +80,7 @@ public class controladorCita implements ActionListener{
 				String IdPaciente = ventanacita.JTFPaciente.getText();
 				String IdEstadoCita = (String) ventanacita.JCBEstado.getSelectedItem();
 				String IdConsultorio = (String) ventanacita.JCBConsultorio.getSelectedItem();
-				String IdMedico = (String) ventanacita.JTFMedico.getText();
+				String IdMedico = (String) ventanacita.JTFIdMedico.getText();
 				Date fechaCita = ventanacita.Fecha.getDate(); 
 				
 				try {
@@ -112,7 +116,7 @@ public class controladorCita implements ActionListener{
 	public void CargarformularioCita(Cita cita) {
 		try {
 			this.ventanacita.JTFIdcita.setText(cita.getIdCita());
-			this.ventanacita.JTFMedico.setText(cita.getMedico().getNombreMedico());
+			this.ventanacita.JTFIdMedico.setText(cita.getMedico().getNombreMedico());
 			this.ventanacita.JTFPaciente.setText(cita.getPaciente().getNombrePaciente());
 			this.ventanacita.JCBConsultorio.setSelectedIndex(Integer.parseInt(cita.getConsultorio().getIdConsultario()));
 			this.ventanacita.JCBTipo.setSelectedIndex(Integer.parseInt(cita.getTipoCita().getIdTipoCita()));
@@ -125,7 +129,7 @@ public class controladorCita implements ActionListener{
 
 	public void Limpiarformulario() {
 		this.ventanacita.JTFIdcita.setText("");
-		this.ventanacita.JTFMedico.setText("");
+		this.ventanacita.JTFIdMedico.setText("");
 		this.ventanacita.JTFPaciente.setText("");
 		this.ventanacita.JCBConsultorio.setSelectedIndex(0);
 		this.ventanacita.JCBTipo.setSelectedIndex(0);
@@ -139,7 +143,7 @@ public class controladorCita implements ActionListener{
 						JOptionPane.INFORMATION_MESSAGE);
 			 return false;
 		 }
-		 else if(this.ventanacita.JTFMedico.getText().toString().length()<2){
+		 else if(this.ventanacita.JTFIdMedico.getText().toString().length()<2){
 			 JOptionPane.showMessageDialog(null, "El numero de telefono es muy corto por favor verifiquelo", "Info",
 						JOptionPane.INFORMATION_MESSAGE);
 			 return false;
@@ -171,6 +175,22 @@ public class controladorCita implements ActionListener{
 		for (int i = 0; i < listartipoCita.size(); i++) {
 			String item = listartipoCita.get(i).getDescripcionTipoCita();
 			ventanacita.JCBTipo.addItem(item);
+		}
+	}
+	
+	public void listarEstadoCita() {
+		listarEstadoCita = MidaoEstadoCita.listarEstadoCita();
+		for (int i = 0; i < listarEstadoCita.size(); i++) {
+			String item = listarEstadoCita.get(i).getDescripcionEstadoCita();
+			ventanacita.JCBEstado.addItem(item);
+		}
+	}
+	
+	public void listarConsultorios() {
+		listarConsultorio = MidaoConsultorio.listarConsultorioCita();
+		for (int i = 0; i < listarConsultorio.size(); i++) {
+			String item = listarConsultorio.get(i).getIdConsultario();
+			ventanacita.JCBConsultorio.addItem(item);
 		}
 	}
 
