@@ -24,6 +24,7 @@ public class Conexion {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String database = "hospital";
             String usuario  = "root";
+            //Comentario para sbaer de git.
             String clave    = "1234";
             con =  DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/"+database+"?"

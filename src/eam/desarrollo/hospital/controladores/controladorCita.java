@@ -102,7 +102,7 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 					//Paciente paciente = MidaoPaciente.buscar(IdPaciente);
 					
 					Medico medico = MidaoMedico.buscar(IdMedico);
-					System.out.println(medico.getNombreMedico());
+					System.out.println(medico);
 					/*TipoCita tipocitaob = MidaoTipoCita.buscar(tipocita);
 					EstadoCita estadocita = MidaoEstadoCita.buscar(IdEstadoCita);
 					Consultorio consultorio = MidaoConsultorio.buscar(IdConsultorio);
@@ -273,7 +273,7 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 		try {
 			while (consultoriotable.next()) {
 				try {
-					TbmodelC.addRow(new Object[] { consultoriotable.getString("id_medico"),
+					TbmodelC.addRow(new Object[] { consultoriotable.getString("id_medico"),consultoriotable.getString("numero_documento_medico"),
 							consultoriotable.getString("nombre_medico"), consultoriotable.getString("apellido_medico"),
 							consultoriotable.getString("telefono_medico") });
 				} catch (SQLException e) {
