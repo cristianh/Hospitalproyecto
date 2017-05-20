@@ -15,70 +15,97 @@ public class Agenda implements Serializable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Hora1. */
-	private int hora1;
-
-	/** Hora2. */
-	private int hora2;
-
-	/** IdProfesional. */
-	private Integer idprofesional;
-
-	/** fecha. */
-	private Date fecha;
-
+	public String id_agenda;
 	
-	/**
-	 * 
-	 * @param hora1
-	 * @param hora2
-	 * @param idprofesional
-	 * @param fecha
-	 */
-	public Agenda(Integer hora1, Integer hora2, Integer idprofesional, Date fecha) {
+	public Date fecha_agenda;
+	
+	public String hora_agenda;
+	
+	public Medico medico;
+
+	public Agenda(String id_agenda, Date fecha_agenda, String hora_agenda, Medico medico) {
 		super();
-		this.hora1 = hora1;
-		this.hora2 = hora2;
-		this.idprofesional = idprofesional;
-		this.fecha = fecha;
+		this.id_agenda = id_agenda;
+		this.fecha_agenda = fecha_agenda;
+		this.hora_agenda = hora_agenda;
+		this.medico = medico;
 	}
 
-	/**
-	 * Constructor.
-	 */
-	public Agenda() {
+	public String getId_agenda() {
+		return id_agenda;
 	}
 
-	public int getHora1() {
-		return hora1;
+	public void setId_agenda(String id_agenda) {
+		this.id_agenda = id_agenda;
 	}
 
-	public void setHora1(int hora1) {
-		this.hora1 = hora1;
+	public Date getFecha_agenda() {
+		return fecha_agenda;
 	}
 
-	public int getHora2() {
-		return hora2;
+	public void setFecha_agenda(Date fecha_agenda) {
+		this.fecha_agenda = fecha_agenda;
 	}
 
-	public void setHora2(int hora2) {
-		this.hora2 = hora2;
+	public String getHora_agenda() {
+		return hora_agenda;
 	}
 
-	public Integer getIdprofesional() {
-		return idprofesional;
+	public void setHora_agenda(String hora_agenda) {
+		this.hora_agenda = hora_agenda;
 	}
 
-	public void setIdprofesional(Integer idprofesional) {
-		this.idprofesional = idprofesional;
+	public Medico getMedico() {
+		return medico;
 	}
 
-	public Date getFecha() {
-		return fecha;
+	public void setMedico(Medico medico) {
+		this.medico = medico;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((fecha_agenda == null) ? 0 : fecha_agenda.hashCode());
+		result = prime * result + ((hora_agenda == null) ? 0 : hora_agenda.hashCode());
+		result = prime * result + ((id_agenda == null) ? 0 : id_agenda.hashCode());
+		result = prime * result + ((medico == null) ? 0 : medico.hashCode());
+		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Agenda other = (Agenda) obj;
+		if (fecha_agenda == null) {
+			if (other.fecha_agenda != null)
+				return false;
+		} else if (!fecha_agenda.equals(other.fecha_agenda))
+			return false;
+		if (hora_agenda == null) {
+			if (other.hora_agenda != null)
+				return false;
+		} else if (!hora_agenda.equals(other.hora_agenda))
+			return false;
+		if (id_agenda == null) {
+			if (other.id_agenda != null)
+				return false;
+		} else if (!id_agenda.equals(other.id_agenda))
+			return false;
+		if (medico == null) {
+			if (other.medico != null)
+				return false;
+		} else if (!medico.equals(other.medico))
+			return false;
+		return true;
+	}
+	
+	
 
 }

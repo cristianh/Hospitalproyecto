@@ -24,7 +24,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import eam.desarollo.hospital.vistas.VentanaCita;
-import eam.desarollo.hospital.vistas.VentanaMedicoBuscar;
 import eam.desarrollo.hospital.DAO.DAOCita;
 import eam.desarrollo.hospital.DAO.DAOConsultorio;
 import eam.desarrollo.hospital.DAO.DAOEstadoCita;
@@ -324,9 +323,7 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 
 	public void CargarTablaResultadoBusqueda() throws Exception {
 		// TODO Auto-generated method stub
-		String columna[] = new String[] { "Columna1", "Columna2", "Columna3", "Columna3", "Columna3", "Columna3",
-				"Columna3", "Columna8" };
-		DefaultTableModel TbmodelC = new DefaultTableModel(null, columna);
+		DefaultTableModel TbmodelC = new DefaultTableModel();
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);
 
