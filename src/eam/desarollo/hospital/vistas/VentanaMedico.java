@@ -22,6 +22,9 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
 
 public class VentanaMedico {
 
@@ -108,57 +111,55 @@ public class VentanaMedico {
 
 		GroupLayout groupLayout = new GroupLayout(frmMedico.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(40)
-							.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-							.addComponent(btnBuscar))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(21)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblIdmedico)
-								.addComponent(lblLicenciaMedicaN)
-								.addComponent(lblNombreMedico)
-								.addComponent(lblTelefonoMedico)
-								.addComponent(lblEmailMedico))
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(JTFEmailmedico, 151, 151, 151)
-								.addComponent(JTFTelefonomedico, 151, 151, 151)
-								.addComponent(JTFNombremedico, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
-								.addComponent(JTFNumerodocumento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(JTFIdmedico, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(26)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addGap(18)
+						.addComponent(lblIdmedico)
+						.addComponent(lblLicenciaMedicaN)
+						.addComponent(lblNombreMedico)
+						.addComponent(lblTelefonoMedico)
+						.addComponent(lblEmailMedico))
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(JTFEmailmedico, 151, 151, 151)
+						.addComponent(JTFTelefonomedico, 151, 151, 151)
+						.addComponent(JTFNombremedico, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
+						.addComponent(JTFNumerodocumento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(JTFIdmedico, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblTelefonoEmergencia)
+						.addComponent(lblDireccionMedico)
+						.addComponent(lblApellidoMedico)
+						.addComponent(lblTipoDocumento)
+						.addComponent(lblFechaNacimiento))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(JTFTelefonoemergencia, 132, 132, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblTelefonoEmergencia)
-								.addComponent(lblDireccionMedico)
-								.addComponent(lblApellidoMedico)
-								.addComponent(lblTipoDocumento)
-								.addComponent(lblFechaNacimiento))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(dateChooser, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(JTFDireccionmedico, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
 								.addComponent(JTFApellidomedico, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-								.addComponent(JTFTelefonoemergencia, 132, 132, Short.MAX_VALUE)
-								.addComponent(JCBTipodocumentomedico, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGap(84))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(48)
-							.addComponent(btnEliminar)
-							.addGap(43)
-							.addComponent(btnActualizar)
-							.addContainerGap(57, Short.MAX_VALUE))))
+								.addComponent(JCBTipodocumentomedico, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+					.addGap(65))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(40)
+					.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+					.addComponent(btnBuscar)
+					.addGap(48)
+					.addComponent(btnEliminar)
+					.addGap(43)
+					.addComponent(btnActualizar)
+					.addGap(43))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(31)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(45, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
@@ -201,14 +202,13 @@ public class VentanaMedico {
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblTelefonoEmergencia)
 								.addComponent(JTFTelefonoemergencia, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addPreferredGap(ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnEliminar)
-						.addComponent(btnActualizar)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnBuscar)))
-					.addGap(43))
+					.addGap(30)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnRegistrar, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnBuscar, Alignment.TRAILING)
+						.addComponent(btnEliminar, Alignment.TRAILING)
+						.addComponent(btnActualizar, Alignment.TRAILING))
+					.addGap(31))
 		);
 		groupLayout.linkSize(SwingConstants.VERTICAL, new Component[] {btnRegistrar, btnActualizar, btnEliminar, btnBuscar});
 		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnRegistrar, btnActualizar, btnEliminar, btnBuscar});
@@ -219,9 +219,16 @@ public class VentanaMedico {
 		btnActualizar.setIcon(new ImageIcon("C:\\Users\\Casa1\\Documents\\GitHub\\Hospitalproyecto\\Imagenes\\usuario (1).png"));
 		btnRegistrar.setIcon(new ImageIcon("C:\\Users\\Casa1\\Documents\\GitHub\\Hospitalproyecto\\Imagenes\\usuario (3).png"));
 		frmMedico.getContentPane().setLayout(groupLayout);
+		
+		frmMedico.setJMenuBar(menuBar);
+		
+		menuBar.add(mnReportes);
+		JBTReporte.setIcon(new ImageIcon("C:\\Users\\Casa1\\Documents\\GitHub\\Hospitalproyecto\\Imagenes\\Icono Pdf.png"));
+		
+		mnReportes.add(JBTReporte);
 	}
 
-	private JFrame frmMedico;
+	public JFrame frmMedico;
 	public JTextField JTFIdmedico = new JTextField();
 	public JTextField JTFNombremedico = new JTextField();
 	public JTextField JTFApellidomedico = new JTextField();
@@ -237,4 +244,7 @@ public class VentanaMedico {
 	public JButton btnEliminar = new JButton("ELIMINAR");
 	public JButton btnBuscar = new JButton("BUSCAR");
 	public static controladorMedico micontroladormedico;
+	public JMenuBar menuBar = new JMenuBar();
+	public JMenu mnReportes = new JMenu("Reportes");
+	public JMenuItem JBTReporte = new JMenuItem("Generar Reporte");
 }

@@ -7,23 +7,37 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.jws.Oneway;
 import javax.swing.BorderFactory;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import com.mysql.jdbc.Connection;
+
 import eam.desarollo.hospital.vistas.VentanaMedico;
 import eam.desarrollo.hospital.DAO.DAOMedico;
+import eam.desarrollo.hospital.conexion.Conexion;
+import eam.desarrollo.hospital.entidades.EstadoConsultorio;
 import eam.desarrollo.hospital.entidades.Genero;
 import eam.desarrollo.hospital.entidades.Medico;
 import eam.desarrollo.hospital.entidades.Municipio;
 import eam.desarrollo.hospital.entidades.Medico;
 import eam.desarrollo.hospital.entidades.Tipodocumento;
+import eam.desarrollo.hospital.reports.ReportExporter;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class controladorMedico  implements ActionListener{
 
@@ -49,6 +63,7 @@ public class controladorMedico  implements ActionListener{
 		this.ventanamedico.btnBuscar.addActionListener(this);
 		this.ventanamedico.btnEliminar.addActionListener(this);
 		this.ventanamedico.btnActualizar.addActionListener(this);
+		this.ventanamedico.JBTReporte.addActionListener(this);
 		Solo_letras(this.ventanamedico.JTFNombremedico);
 		Solo_letras(this.ventanamedico.JTFApellidomedico);
 		
@@ -135,6 +150,7 @@ public class controladorMedico  implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent evento) {
 		// TODO Auto-generated method stub
+		System.out.println(evento.getActionCommand());
 		switch (evento.getActionCommand()) {
 		case "REGISTRAR":
 			if (verificarformulario() && verificarCombo()) {
@@ -212,6 +228,67 @@ public class controladorMedico  implements ActionListener{
 				e.printStackTrace();
 			}
 
+			break;
+		case "Generar Reporte":
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setDialogTitle("Specify a file to save");
+			
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int userSelection = fileChooser.showSaveDialog(ventanamedico.frmMedico);
+			 
+			if (userSelection == JFileChooser.APPROVE_OPTION) {
+			    File fileToSave = fileChooser.getSelectedFile();
+			    try {
+			    	Medico medico = null;
+			    	Tipodocumento tipodoc = null;
+			    	java.sql.ResultSet rs = null;
+			    	Connection con = Conexion.getConexion();
+					java.sql.PreparedStatement stm;
+					String sql = "SELECT  m.id_medico,m.nombre_medico,m.apellido_medico,m.telefono_medico,m.direccion_medico,m.email_medico,m.telefono_emergencia_medico,m.fecha_nacimiento_medico,m.numero_documento_medico,t.id_tipo_documento,t.tipo_documento from medico as m "
+					+ "join tipodocumento as t on t.id_tipo_documento = m.id_tipo_documento";
+					stm = con.prepareStatement(sql);
+					rs = stm.executeQuery();
+					
+					ArrayList<Medico> listMed = new ArrayList<>();
+					
+					while (rs.next()) {
+						tipodoc= new Tipodocumento(rs.getString("id_tipo_documento"), rs.getString("tipo_documento"));
+						//medico = new Medico(rs.getString("id_medico"),rs.getString("nombre_medico"),rs.getString("apellido_medico"),rs.getString("telefono_medico"),rs.getString("direccion_medico"),rs.getString("email_medico"),rs.getString("telefono_emergencia_medico"),rs.getDate("fecha_nacimiento_medico"),rs.getString("numero_documento_medico"),tipodoc);
+						listMed.add(new Medico(rs.getString("id_medico"),rs.getString("nombre_medico"),rs.getString("apellido_medico"),rs.getString("telefono_medico"),rs.getString("direccion_medico"),rs.getString("email_medico"),rs.getString("telefono_emergencia_medico"),rs.getDate("fecha_nacimiento_medico"),rs.getString("numero_documento_medico"),tipodoc));
+						/*try {
+							list.add(new Medico(rs.getString("id_medico"),rs.getString("nombre_medico"),rs.getString("apellido_medico"),rs.getString("telefono_medico"),rs.getString("direccion_medico"),rs.getString("email_medico"),rs.getString("telefono_emergencia_medico"),rs.getDate("fecha_nacimiento_medico"),rs.getString("numero_documento_medico"),tipodoc));	
+						} catch (Exception e) {
+							// TODO: handle exception
+							System.out.println(e.getMessage());
+						}*/
+						
+					}
+					
+					System.out.println(listMed);
+					
+					Map<String, Object> parameters = new HashMap<String, Object>();
+//					INICIO
+					/*ArrayList<DataBean> beans = new ArrayList<DataBean>();
+					beans.add(new DataBean("2010", "enero", 10.1));
+					beans.add(new DataBean("2010", "febrero", 15.9));
+					beans.add(new DataBean("2010", "marzo", 17.1));
+					beans.add(new DataBean("2011", "enero", 9.0));
+					beans.add(new DataBean("2011", "febrero", 3.7));
+					beans.add(new DataBean("2011", "marzo", 4.3));
+					parameters.put("CHART_DATASET", new JRBeanCollectionDataSource(beans));*/
+								
+//					FIN
+					ReportExporter reportExporter = new ReportExporter();
+					reportExporter.export("ReporteMedicos.jasper", fileToSave.getAbsolutePath(), parameters,listMed);
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
+				} catch (JRException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			break;
 
 		}
