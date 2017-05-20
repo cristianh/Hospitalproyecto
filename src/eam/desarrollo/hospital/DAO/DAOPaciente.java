@@ -89,7 +89,7 @@ public class DAOPaciente implements IntPaciente {
 		// java.sql.ResultSet res = pstmt.executeQuery();
 		Paciente paciente = null;
 		// hubo un registro....
-		System.out.println(res);
+		
 		if (res.next()) {
 			String idPaciente = res.getString(1);
 			String nombrePaciente = res.getString(2);
@@ -105,7 +105,7 @@ public class DAOPaciente implements IntPaciente {
 			String nombremunicipio = res.getString(12);
 			String id_genero = res.getString(13);
 			String tipogenero = res.getString(14);
-			System.out.println(fechaNacimientoPaciente);
+			
 			/*
 			 * Tipodocumento tipodocumento= new
 			 * Tipodocumento(res.getObject(9).toString(), ); Municipio
@@ -132,7 +132,7 @@ public class DAOPaciente implements IntPaciente {
 		// TODO Auto-generated method stub
 		try {
 
-			// System.out.println(sql);
+			
 			Connection con = Conexion.getConexion();
 			String sql2 = "DELETE from paciente WHERE numero_documento_paciente=?";
 			java.sql.PreparedStatement stm2 = con.prepareStatement(sql2);

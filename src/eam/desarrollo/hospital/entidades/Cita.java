@@ -57,7 +57,6 @@ public class Cita implements Serializable {
 	 */
 	public Cita(String idCita, Date fechaCita, String horaCita, Paciente paciente, TipoCita tipoCita,
 			EstadoCita estadoCita, Consultorio consultorio, Medico medico) {
-		super();
 		this.idCita = idCita;
 		this.fechaCita = fechaCita;
 		HoraCita = horaCita;

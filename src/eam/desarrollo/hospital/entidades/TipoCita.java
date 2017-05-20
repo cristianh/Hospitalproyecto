@@ -145,4 +145,11 @@ public class TipoCita implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return descripcionTipoCita;
+	}
+	
+	
+
 }

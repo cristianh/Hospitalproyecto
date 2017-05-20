@@ -37,6 +37,18 @@ public class Consultorio implements Serializable {
 		this.citaSet = new HashSet<Cita>();
 		this.habitacionSet = new HashSet<Habitacion>();
 	}
+	/**
+	 * 
+	 * @param idConsultario
+	 * @param descripcionConsultorio
+	 * @param estadoConsultorio
+	 */
+	public Consultorio(String idConsultario, String descripcionConsultorio, EstadoConsultorio estadoConsultorio) {
+		super();
+		this.idConsultario = idConsultario;
+		this.descripcionConsultorio = descripcionConsultorio;
+		this.estadoConsultorio = estadoConsultorio;
+	}
 
 	/**
 	 * Set the id_consultario.
@@ -188,12 +200,13 @@ public class Consultorio implements Serializable {
 		}
 		return true;
 	}
-
-	public Consultorio(String idConsultario, String descripcionConsultorio, EstadoConsultorio estadoConsultorio) {
-		super();
-		this.idConsultario = idConsultario;
-		this.descripcionConsultorio = descripcionConsultorio;
-		this.estadoConsultorio = estadoConsultorio;
+	
+	@Override
+	public String toString() {
+		return idConsultario;
 	}
 
+	
+
+	
 }

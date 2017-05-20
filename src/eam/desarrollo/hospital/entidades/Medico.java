@@ -601,4 +601,11 @@ public class Medico implements Serializable {
 		return true;
 	}
 
+
+	@Override
+	public String toString() {
+		return nombreMedico + " " +apellidoMedico;
+	}
+
+	
 }

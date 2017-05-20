@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.ResultSet;
 
 import eam.desarrollo.hospital.conexion.Conexion;
 import eam.desarrollo.hospital.entidades.Cita;
 import eam.desarrollo.hospital.entidades.Consultorio;
+import eam.desarrollo.hospital.entidades.EstadoCita;
 import eam.desarrollo.hospital.entidades.EstadoConsultorio;
 import eam.desarrollo.hospital.entidades.TipoCita;
 import eam.desarrollo.hospital.interfaces.IntCita;
@@ -20,7 +22,7 @@ public class DAOCita implements IntCita {
 	@Override
 	public void crear(Cita cita) throws Exception {
 		try {
-
+			System.out.println("Entra");
 			String sql = "INSERT INTO  cita (id_cita,fecha_cita,hora_cita,id_paciente,id_tipo_cita,id_estado_cita,id_consultario,id_medico) VALUES (?,?,?,?,?,?,?,?)";
 			// System.out.println(sql);
 
@@ -39,48 +41,39 @@ public class DAOCita implements IntCita {
 
 			JOptionPane.showMessageDialog(null, "Cita registrada", "Info", JOptionPane.INFORMATION_MESSAGE);
 		} catch (SQLException ex) {
-			//System.out.println(ex.getMessage());
+			// System.out.println(ex.getMessage());
 
 		}
 
 	}
 
 	@Override
-	public Cita buscar(String numerocita) throws Exception {
+	public java.sql.ResultSet buscar(String numerocita) throws Exception {
 
 		Connection con = Conexion.getConexion();
 
-		String sql = "SELECT c.id_cita,c.fecha_cita,c.hora_cita,c.id_paciente,p.nombre_paciente,c.id_tipo_cita,tc.descripcion_tipo_cita,c.id_estado_cita,ec.descripcion_estado_cita,c.id_consultario,c.id_medico,m.nombre_medico  from cita as c"
-				+ "join paciente as p on c.id_paciente=p.id_paciente"
-				+ "join tipo_cita as tc on c.id_tipo_cita=tc.id_tipo_cita"
-				+ "join estado_cita as ec on c.id_estado_cita = ec.id_estado_cita"
-				+ "join consultorio as co on c.id_consultario = co.id_consultario"
-				+ "join medico as m on c.id_medico = m.id_medico where c.id_cita";
+		String sql = "SELECT c.id_cita,c.fecha_cita,c.hora_cita,c.id_paciente,p.nombre_paciente,p.apellido_paciente,c.id_tipo_cita,tc.descripcion_tipo_cita,c.id_estado_cita,ec.descripcion_estado_cita,c.id_consultario,c.id_medico,m.nombre_medico,m.apellido_medico  from cita as c "
+				+ "join paciente as p on c.id_paciente=p.id_paciente "
+				+ "join tipo_cita as tc on c.id_tipo_cita=tc.id_tipo_cita "
+				+ "join estado_cita as ec on c.id_estado_cita = ec.id_estado_cita "
+				+ "join consultorio as co on c.id_consultario = co.id_consultorio "
+				+ "join medico as m on c.id_medico = m.id_medico where c.id_cita=?";
+		//String sql = "SELECT * from cita where id_cita=?";
 		java.sql.PreparedStatement pstmt = con.prepareStatement(sql);
 
 		pstmt.setString(1, numerocita);
 		// ejecutar consulta
 		java.sql.ResultSet res = pstmt.executeQuery();
 
-		Cita cita = null;
+		//Cita cita = null;
 		// hubo un registro....
-		//System.out.println(res);
-		if (res.next()) {
-			String idCita = res.getString(1);
-			String fechaCita = res.getString(2);
-			String horaCita = res.getString(3);
-			String idPaciente = res.getString(4);
-			String tipoCita = res.getString(6);
+		// System.out.println(res);
+		/*if (res.next()) {
 			
-			String idestadoconsultorio = res.getString(4);
-			String descripcionestadoconsultorio = res.getString(5);
-			EstadoConsultorio estado_consultorio = new EstadoConsultorio(idestadoconsultorio,
-					descripcionestadoconsultorio);
-			//cita = new Cita(idCita, null, null, null, null, null, null);
 
-		}
+		}*/
 		con.close();
-		return cita;
+		return res;
 
 	}
 
@@ -97,11 +90,11 @@ public class DAOCita implements IntCita {
 			stm2.executeUpdate();
 
 		} catch (SQLException ex) {
-			//System.out.println(ex.getMessage());
+			// System.out.println(ex.getMessage());
 			// Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE,
 			// null, ex);
 		} finally {
-			//System.out.print("Usuario eliminado");
+			// System.out.print("Usuario eliminado");
 		}
 
 	}
@@ -116,13 +109,15 @@ public class DAOCita implements IntCita {
 
 			Connection con = Conexion.getConexion();
 			java.sql.PreparedStatement stm = con.prepareStatement(sql);
+			System.out.println(cita.getIdCita());
+			System.out.println(cita.getPaciente().getIdPaciente());
 			stm.setObject(1, cita.getFechaCita());
 			stm.setObject(2, cita.getPaciente().getIdPaciente());
 			stm.setObject(3, cita.getTipoCita().getIdTipoCita());
 			stm.setObject(4, cita.getEstadoCita().getIdEstadoCita());
 			stm.setObject(5, cita.getConsultorio().getIdConsultario());
 			stm.setObject(6, cita.getMedico().getIdMedico());
-			stm.setString(7, cita.getIdCita());
+			stm.setObject(7, cita.getIdCita());
 			stm.executeUpdate();
 
 		} catch (SQLException ex) {
@@ -138,7 +133,7 @@ public class DAOCita implements IntCita {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	public java.sql.ResultSet listarMedicos() {
 		// TODO Auto-generated method stub
@@ -151,12 +146,12 @@ public class DAOCita implements IntCita {
 			rs = stm.executeQuery();
 
 		} catch (SQLException ex) {
-			//System.out.println(ex.getMessage());
+			// System.out.println(ex.getMessage());
 		}
 
 		return rs;
 	}
-	
+
 	public ArrayList<TipoCita> listarEstadoConsul() {
 		TipoCita estado = null;
 		ArrayList<TipoCita> listTipoCita = new ArrayList<>();
@@ -167,16 +162,15 @@ public class DAOCita implements IntCita {
 			Connection con = Conexion.getConexion();
 			java.sql.PreparedStatement stm = con.prepareStatement(sql);
 			java.sql.ResultSet rs = stm.executeQuery();
-			
+
 			while (rs.next()) {
-				estado = new TipoCita(rs.getString("id_tipo_cita"),
-						rs.getString("descripcion_tipo_cita"));
+				estado = new TipoCita(rs.getString("id_tipo_cita"), rs.getString("descripcion_tipo_cita"));
 				listTipoCita.add(estado);
 
 			}
 
 		} catch (SQLException ex) {
-			//System.out.println(ex.getMessage());
+			// System.out.println(ex.getMessage());
 		}
 
 		return listTipoCita;

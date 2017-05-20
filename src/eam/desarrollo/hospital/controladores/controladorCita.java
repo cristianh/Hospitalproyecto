@@ -10,12 +10,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import eam.desarollo.hospital.vistas.VentanaCita;
+import eam.desarollo.hospital.vistas.VentanaMedicoBuscar;
 import eam.desarrollo.hospital.DAO.DAOCita;
 import eam.desarrollo.hospital.DAO.DAOConsultorio;
 import eam.desarrollo.hospital.DAO.DAOEstadoCita;
@@ -23,6 +32,7 @@ import eam.desarrollo.hospital.DAO.DAOMedico;
 import eam.desarrollo.hospital.DAO.DAOPaciente;
 import eam.desarrollo.hospital.DAO.DAOTipoCita;
 import eam.desarrollo.hospital.entidades.Cita;
+import eam.desarrollo.hospital.entidades.Citas;
 import eam.desarrollo.hospital.entidades.Consultorio;
 import eam.desarrollo.hospital.entidades.EstadoCita;
 import eam.desarrollo.hospital.entidades.EstadoConsultorio;
@@ -35,7 +45,7 @@ import eam.desarrollo.hospital.entidades.Tipodocumento;
 
 public class controladorCita implements ActionListener, MouseListener, ItemListener {
 	public VentanaCita ventanacita;
-	public Cita nuevo_cita = null;
+	public Cita nueva_cita = null;
 	public DAOCita Midao = new DAOCita();
 	public DAOPaciente MidaoPaciente = new DAOPaciente();
 	public DAOMedico MidaoMedico = new DAOMedico();
@@ -45,6 +55,7 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 	public ArrayList<TipoCita> listartipoCita;
 	public ArrayList<EstadoCita> listarEstadoCita;
 	public ArrayList<Consultorio> listarConsultorio;
+	public Vector<Medico> listarMedicos;
 
 	/**
 	 * 
@@ -54,9 +65,10 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 		this.ventanacita = ventanacita;
 		listarTipoCita();
 		listarEstadoCita();
+		listarMedicos();
 		listarConsultorios();
 		listenerbotones();
-		CargarTablaMedicosCita();
+
 	}
 
 	private void listenerbotones() {
@@ -66,67 +78,96 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 			this.ventanacita.btnBuscar.addActionListener(this);
 			this.ventanacita.btnEliminar.addActionListener(this);
 			this.ventanacita.btnActualizar.addActionListener(this);
-			this.ventanacita.JCBTipo.addActionListener(this);
 			this.ventanacita.btnBuscarPaciente.addActionListener(this);
 		} catch (Exception e) {
-			//System.out.println(e.getMessage());
+			// System.out.println(e.getMessage());
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent evento) {
 		// TODO Auto-generated method stub
+
 		switch (evento.getActionCommand()) {
 		case "Registrar":
 			if (verificarformulario() && verificarCombo()) {
+				String idCita = ventanacita.JTFIdcita.getText();
+				TipoCita tipocita = (TipoCita) ventanacita.JCBTipo.getSelectedItem();
+				Paciente Paciente = null;
 				try {
-					String idCita = ventanacita.JTFIdcita.getText();
-					String tipocita = (String) ventanacita.JCBTipo.getSelectedItem();
-					String IdPaciente = ventanacita.JTFDocumentoPaciente.getText();
-					String IdEstadoCita = (String) ventanacita.JCBEstado.getSelectedItem();
-					String IdConsultorio = (String) ventanacita.JCBConsultorio.getSelectedItem();
-					String IdMedico = (String) ventanacita.JTableMedicocita.getValueAt(
-							ventanacita.JTableMedicocita.getSelectedRow(),
-							ventanacita.JTableMedicocita.getSelectedColumn());
-					Date fechaCita = ventanacita.Fecha.getDate();
-					String HoraCita = ventanacita.JSPHora1.getValue().toString() + "-"
-							+ ventanacita.JSPHora2.getValue().toString();
-					//System.out.println("paciente nombre"+ paciente.getNombrePaciente());
-					//System.out.println("Hora cita" + HoraCita);
-					//System.out.println(idCita);
-					//System.out.println("tipocita" +" " +tipocita);
-					//System.out.println("IdPaciente"+ IdPaciente);
-					//System.out.println("IdMedico"+ IdMedico);
-					
-					//Creamos los objetos
-					//Paciente paciente = MidaoPaciente.buscar(IdPaciente);
-					
-					Medico medico = MidaoMedico.buscar(IdMedico);
-					System.out.println(medico);
-					/*TipoCita tipocitaob = MidaoTipoCita.buscar(tipocita);
-					EstadoCita estadocita = MidaoEstadoCita.buscar(IdEstadoCita);
-					Consultorio consultorio = MidaoConsultorio.buscar(IdConsultorio);
-					nuevo_cita = new Cita(idCita, fechaCita, HoraCita, paciente, tipocitaob, estadocita, consultorio, medico);*/
-					//Midao.crear(nuevo_cita);
+					Paciente = MidaoPaciente.buscar(ventanacita.JTFDocumentoPaciente.getText());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				EstadoCita EstadoCita = (EstadoCita) ventanacita.JCBEstado.getSelectedItem();
+				Consultorio Consultorio = (eam.desarrollo.hospital.entidades.Consultorio) ventanacita.JCBConsultorio
+						.getSelectedItem();
+				Medico Medico = (eam.desarrollo.hospital.entidades.Medico) ventanacita.JCBMedico.getSelectedItem();
+				Date fechaCita = ventanacita.Fecha.getDate();
+				String HoraCita = ventanacita.JSPHora1.getValue().toString() + "-"
+						+ ventanacita.JSPHora2.getValue().toString();
+				nueva_cita = new Cita(idCita, fechaCita, HoraCita, Paciente, tipocita, EstadoCita, Consultorio, Medico);
+				try {
+					Midao.crear(nueva_cita);
+					Limpiarformulario();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
-				Limpiarformulario();
 			}
 
 			break;
-		case "BUSCAR":
+		case "Buscar":
+			try {
+
+				if (!ventanacita.JTFIdcita.getText().isEmpty()) {
+					CargarTablaResultadoBusqueda();
+				} else {
+					JOptionPane.showMessageDialog(null, "Debe ingresar algun parametro de busqueda", "Info",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 			break;
-		case "ELIMINAR":
-
+		case "Eliminar":
+			try {
+				Midao.eliminar(ventanacita.JTFIdcita.getText());
+				Limpiarformulario();
+				JOptionPane.showMessageDialog(null, "Cita eliminado", "Info", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
-		case "ACTUALIZAR":
-
-			break;
-		case "comboBoxChanged":
-			//System.out.println(ventanacita.JCBTipo.getSelectedItem().toString());
-
+		case "Actualizar":
+			System.out.println("Actualizar");
+			String idCita = ventanacita.JTFIdcita.getText();
+			TipoCita tipocita = (TipoCita) ventanacita.JCBTipo.getSelectedItem();
+			Paciente Paciente = null;
+			try {
+				Paciente = MidaoPaciente.buscar(ventanacita.JTFDocumentoPaciente.getText());
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			EstadoCita EstadoCita = (EstadoCita) ventanacita.JCBEstado.getSelectedItem();
+			Consultorio Consultorio = (eam.desarrollo.hospital.entidades.Consultorio) ventanacita.JCBConsultorio
+					.getSelectedItem();
+			Medico Medico = (eam.desarrollo.hospital.entidades.Medico) ventanacita.JCBMedico.getSelectedItem();
+			Date fechaCita = ventanacita.Fecha.getDate();
+			String HoraCita = ventanacita.JSPHora1.getValue().toString() + "-"
+					+ ventanacita.JSPHora2.getValue().toString();
+			nueva_cita = new Cita(idCita, fechaCita, HoraCita, Paciente, tipocita, EstadoCita, Consultorio, Medico);
+			try {
+				Midao.actualizar(nueva_cita);
+				Limpiarformulario();
+				JOptionPane.showMessageDialog(null, "Cita actualizada", "Info", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			break;
 		case "Buscar paciente":
 			try {
@@ -155,7 +196,7 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 			this.ventanacita.JCBEstado.setSelectedIndex(Integer.parseInt(cita.getEstadoCita().getIdEstadoCita()));
 			this.ventanacita.Fecha.setDate(cita.getFechaCita());
 		} catch (Exception e) {
-			//System.out.println("Mensaje" + e.getLocalizedMessage());
+			// System.out.println("Mensaje" + e.getLocalizedMessage());
 		}
 	}
 
@@ -169,13 +210,14 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 	}
 
 	public boolean verificarformulario() {
-		/*if (this.ventanacita.JTFIdcita.getText().toString().length() < 3) {
-			JOptionPane.showMessageDialog(null, "El numero de documento es muy corto por favor verifiquelo", "Info",
-					JOptionPane.INFORMATION_MESSAGE);
-			return false;
-		} else {
-			
-		}*/
+		/*
+		 * if (this.ventanacita.JTFIdcita.getText().toString().length() < 3) {
+		 * JOptionPane.showMessageDialog(null,
+		 * "El numero de documento es muy corto por favor verifiquelo", "Info",
+		 * JOptionPane.INFORMATION_MESSAGE); return false; } else {
+		 * 
+		 * }
+		 */
 		return true;
 	}
 
@@ -190,7 +232,7 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 				return true;
 			}
 		} catch (Exception e) {
-			//System.out.println("Mensaje" + e.getMessage());
+			// System.out.println("Mensaje" + e.getMessage());
 		}
 
 		return false;
@@ -199,24 +241,42 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 	public void listarTipoCita() {
 		listartipoCita = MidaoTipoCita.listarTipocita();
 		for (int i = 0; i < listartipoCita.size(); i++) {
-			String item = listartipoCita.get(i).getDescripcionTipoCita();
-			ventanacita.JCBTipo.addItem(item);
+			ventanacita.JCBTipo.addItem(new TipoCita(listartipoCita.get(i).getIdTipoCita(),
+					listartipoCita.get(i).getDescripcionTipoCita()));
 		}
 	}
 
 	public void listarEstadoCita() {
 		listarEstadoCita = MidaoEstadoCita.listarEstadoCita();
 		for (int i = 0; i < listarEstadoCita.size(); i++) {
-			String item = listarEstadoCita.get(i).getDescripcionEstadoCita();
-			ventanacita.JCBEstado.addItem(item);
+			// String item = listarEstadoCita.get(i).getDescripcionEstadoCita();
+			ventanacita.JCBEstado.addItem(new EstadoCita(listarEstadoCita.get(i).getIdEstadoCita(),
+					listarEstadoCita.get(i).getDescripcionEstadoCita()));
 		}
 	}
 
 	public void listarConsultorios() {
 		listarConsultorio = MidaoConsultorio.listarConsultorioCita();
 		for (int i = 0; i < listarConsultorio.size(); i++) {
-			String item = listarConsultorio.get(i).getIdConsultario();
-			ventanacita.JCBConsultorio.addItem(item);
+			// String item = listarConsultorio.get(i).getIdConsultario();
+			ventanacita.JCBConsultorio.addItem(new Consultorio(listarConsultorio.get(i).getIdConsultario(),
+					listarConsultorio.get(i).getDescripcionConsultorio(),
+					listarConsultorio.get(i).getEstadoConsultorio()));
+		}
+	}
+
+	public void listarMedicos() {
+		listarMedicos = MidaoMedico.listarMedico();
+		for (int i = 0; i < listarMedicos.size(); i++) {
+			// String item = listarMedicos.get(i).getNombreMedico() + " " +
+			// listarMedicos.get(i).getApellidoMedico();
+			ventanacita.JCBMedico.addItem(new Medico(listarMedicos.get(i).getIdMedico(),
+					listarMedicos.get(i).getNombreMedico(), listarMedicos.get(i).getApellidoMedico(),
+					listarMedicos.get(i).getTelefonoMedico(), listarMedicos.get(i).getDireccionMedico(),
+					listarMedicos.get(i).getEmailMedico(), listarMedicos.get(i).getTelefonoEmergenciaMedico(),
+					listarMedicos.get(i).getFechaNacimientoMedico(), listarMedicos.get(i).getNumeroDocumentoMedico(),
+					listarMedicos.get(i).getTipodocumento()));
+			// ventanacita.JCBMedico.setSelectedIndex(Integer.parseInt(listarMedicos.get(i).getIdMedico()));
 		}
 	}
 
@@ -253,8 +313,8 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 	@Override
 	public void itemStateChanged(ItemEvent event) {
 		// TODO Auto-generated method stub
-		//System.out.println(event.getStateChange());
-		//System.out.println(ItemEvent.SELECTED);
+		// System.out.println(event.getStateChange());
+		// System.out.println(ItemEvent.SELECTED);
 		if (event.getStateChange() == ItemEvent.SELECTED) {
 			Object item = event.getItem();
 			// do something with object
@@ -262,30 +322,45 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 
 	}
 
-	public void CargarTablaMedicosCita() {
+	public void CargarTablaResultadoBusqueda() throws Exception {
 		// TODO Auto-generated method stub
-		DefaultTableModel TbmodelC = new DefaultTableModel();
-		ventanacita.JTableMedicocita.setModel(TbmodelC);
-		TbmodelC.setColumnIdentifiers(
-				new Object[] { "Id medico","numero documento","nombre medico", "apellido medico", "telefono medico" });
+		String columna[] = new String[] { "Columna1", "Columna2", "Columna3", "Columna3", "Columna3", "Columna3",
+				"Columna3", "Columna8" };
+		DefaultTableModel TbmodelC = new DefaultTableModel(null, columna);
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+		tcr.setHorizontalAlignment(SwingConstants.CENTER);
+
+		// DefaultTableModel TbmodelC = new DefaultTableModel();
+		ventanacita.JTBresultado.setModel(TbmodelC);
+		TbmodelC.setColumnIdentifiers(new Object[] { "Id cita", "fecha cita", "hora cita", "paciente", "tipo cita",
+				"estado cita", "consultorio", "medico" });
 		// ventanaconsultorio.JTBConsultorio.getColumnModel().getColumn(0).setCellRenderer(ventanaconsultorio.JTBConsultorio.getTableHeader().getDefaultRenderer());
-		ResultSet consultoriotable = MidaoMedico.listarMedico();
+		ResultSet resultado = Midao.buscar(ventanacita.JTFIdcita.getText());
+
 		try {
-			while (consultoriotable.next()) {
+			while (resultado.next()) {
 				try {
-					TbmodelC.addRow(new Object[] { consultoriotable.getString("id_medico"),consultoriotable.getString("numero_documento_medico"),
-							consultoriotable.getString("nombre_medico"), consultoriotable.getString("apellido_medico"),
-							consultoriotable.getString("telefono_medico") });
+					TbmodelC.addRow(new Object[] { resultado.getString("id_cita"), resultado.getString("fecha_cita"),
+							resultado.getString("hora_cita"), resultado.getString("nombre_paciente")+ " "+ resultado.getString("apellido_paciente"),
+							resultado.getString("descripcion_tipo_cita"),
+							resultado.getString("descripcion_estado_cita"), resultado.getString("id_consultario"),
+							resultado.getString("nombre_medico") + " " + resultado.getString("apellido_medico") });
+
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 			}
+			for (int i = 0; i < 8; i++) {
+				ventanacita.JTBresultado.getColumnModel().getColumn(i).setCellRenderer(tcr);
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 }

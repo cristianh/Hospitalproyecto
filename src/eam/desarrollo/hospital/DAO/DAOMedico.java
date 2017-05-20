@@ -7,7 +7,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 
+import javax.management.Query;
 import javax.swing.JOptionPane;
 
 import com.mysql.jdbc.Connection;
@@ -19,6 +21,7 @@ import eam.desarrollo.hospital.entidades.Municipio;
 import eam.desarrollo.hospital.entidades.Paciente;
 import eam.desarrollo.hospital.entidades.Tipodocumento;
 import eam.desarrollo.hospital.interfaces.IntMedico;
+
 
 /**
  * @author Casa1
@@ -152,13 +155,9 @@ public class DAOMedico implements IntMedico {
 		}
 	}
 
-	@Override
-	public void listarMedico(Medico medico) {
-		// TODO Auto-generated method stub
+	
 
-	}
-
-	public java.sql.ResultSet listarMedico() {
+	public java.sql.ResultSet listarMedicoRS() {
 		// TODO Auto-generated method stub
 		java.sql.ResultSet rs = null;
 		try {
@@ -202,4 +201,43 @@ public class DAOMedico implements IntMedico {
 		return listDoc;
 
 	}
+
+	@Override
+	public Vector<Medico> listarMedico() {
+		Medico medico = null;
+		Vector<Medico> listMedico = new Vector<>();
+		// Tipodocumento tipDocumento;
+		try {
+
+			String sql = "SELECT  m.id_medico,m.nombre_medico,m.apellido_medico,m.telefono_medico,m.direccion_medico,m.email_medico,m.telefono_emergencia_medico,m.fecha_nacimiento_medico,m.numero_documento_medico,t.id_tipo_documento,t.tipo_documento from medico as m "
+				+ "join tipodocumento as t on t.id_tipo_documento = m.id_tipo_documento";
+			Connection con = Conexion.getConexion();
+			java.sql.PreparedStatement stm = con.prepareStatement(sql);
+			java.sql.ResultSet res = stm.executeQuery();
+			
+			while (res.next()) {
+				String idmedico = res.getString(1);
+				String nombreMedico = res.getString(2);
+				String apellidoMedico = res.getString(3);
+				String telefonoMedico = res.getString(4);
+				String direccionMedico = res.getString(5);
+				String emailMedico = res.getString(6);
+				String telefonoEmergenciaMedico = res.getString(7);
+				Date fechaNacimientoMedico = res.getDate(8);
+				String numeroDocumentoMedico = res.getString(9);
+				Tipodocumento tipodocumento = new Tipodocumento(res.getString(10), res.getString(11));
+				medico = new Medico(idmedico, nombreMedico, apellidoMedico, telefonoMedico, direccionMedico, emailMedico,
+						telefonoEmergenciaMedico, fechaNacimientoMedico, numeroDocumentoMedico, tipodocumento);
+				listMedico.addElement(medico);
+				System.out.println(medico.toString());
+			}
+
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+
+		return listMedico;
+	}
+
+	
 }
