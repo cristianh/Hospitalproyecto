@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import eam.desarollo.hospital.utils.UtilsForms;
 import eam.desarollo.hospital.vistas.VentanaAgenda;
 import eam.desarrollo.hospital.DAO.DAOAgenda;
 import eam.desarrollo.hospital.DAO.DAOMedico;
@@ -56,6 +57,7 @@ public class controladorAgenda implements ActionListener, MouseListener, ItemLis
 		this.ventanaagenda = ventanaagenda;
 		listarMedicos();
 		listenerbotones();
+		validarInputs();
 		try {
 			CargarTablaAgenda();
 		} catch (Exception e) {
@@ -265,7 +267,7 @@ public class controladorAgenda implements ActionListener, MouseListener, ItemLis
 
 		// DefaultTableModel TbmodelC = new DefaultTableModel();
 		ventanaagenda.JTBAgenda.setModel(TbmodelC);
-		TbmodelC.setColumnIdentifiers(new Object[] { "Id agenda", "fecha medico", "horario medico", "nombre medico", "apellido medico"});
+		TbmodelC.setColumnIdentifiers(new Object[] { "Id agenda", "fecha", "horario medico", "nombre medico", "apellido medico"});
 		// ventanaconsultorio.JTBConsultorio.getColumnModel().getColumn(0).setCellRenderer(ventanaconsultorio.JTBConsultorio.getTableHeader().getDefaultRenderer());
 		ResultSet resultado = Midao.listarAgenda();
 
@@ -290,6 +292,13 @@ public class controladorAgenda implements ActionListener, MouseListener, ItemLis
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void validarInputs(){
+		//Valicar numeros
+		UtilsForms.Solo_numeros(this.ventanaagenda.JTFIdagenda);
+		//Validar si vacio
+		UtilsForms.validarVacio(this.ventanaagenda.JTFIdagenda);
 	}
 
 }

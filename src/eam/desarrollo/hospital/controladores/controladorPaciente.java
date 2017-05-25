@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import eam.desarollo.hospital.utils.UtilsForms;
 import eam.desarollo.hospital.vistas.VentanaPacientes;
 import eam.desarrollo.hospital.DAO.DAOPaciente;
 import eam.desarrollo.hospital.entidades.Genero;
@@ -34,6 +35,7 @@ public class controladorPaciente implements ActionListener {
 	public ArrayList<Tipodocumento> listaDoc;
 	public ArrayList<Genero> listaGene;
 	public ArrayList<Municipio> listaMunici;
+	public UtilsForms ultisforms = new UtilsForms();
 
 	
 
@@ -44,7 +46,7 @@ public class controladorPaciente implements ActionListener {
 		listarGenero();
 		listarMunicipio();
 		listenerbotones();
-
+		validarInputs();
 		// this.ventanapaciente.dolares.addActionListener(this);
 	}
 
@@ -54,23 +56,7 @@ public class controladorPaciente implements ActionListener {
 			this.ventanapaciente.btnRegistrar.addActionListener(this);
 			this.ventanapaciente.btnBuscar.addActionListener(this);
 			this.ventanapaciente.btnEliminar.addActionListener(this);
-			this.ventanapaciente.btnActualizar.addActionListener(this);
-			Solo_letras(this.ventanapaciente.JTFApellidoPaciente);
-			Solo_letras(this.ventanapaciente.JTFNombrePaciente);
-			Solo_letras(this.ventanapaciente.JTFDireccionPaciente);
-			Solo_numeros(this.ventanapaciente.JTFNumeroDocumentoPaciente);
-			Solo_numeros(this.ventanapaciente.JTFIdPaciente);
-			Solo_numeros(this.ventanapaciente.JTFPesoPaciente);
-			Solo_numeros(this.ventanapaciente.JTFTelefonoPaciente);
-
-			validarVacio(this.ventanapaciente.JTFApellidoPaciente);
-			validarVacio(this.ventanapaciente.JTFNombrePaciente);
-			validarVacio(this.ventanapaciente.JTFDireccionPaciente);
-			validarVacio(this.ventanapaciente.JTFNumeroDocumentoPaciente);
-			validarVacio(this.ventanapaciente.JTFIdPaciente);
-			validarVacio(this.ventanapaciente.JTFPesoPaciente);
-			validarVacio(this.ventanapaciente.JTFTelefonoPaciente);
-			
+			this.ventanapaciente.btnActualizar.addActionListener(this);			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -279,83 +265,25 @@ public class controladorPaciente implements ActionListener {
 			ventanapaciente.JCBMunicipioPaciente.addItem(item);
 		}
 	}
-
-	public Boolean validaremail(String email) {
-		String pattheremail = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-		// Compiles the given regular expression into a pattern.
-		Pattern pattern = Pattern.compile(pattheremail);
-
-		// Match the given input against this pattern
-		Matcher matcher = pattern.matcher(email);
-		return matcher.matches();
-	}
-
-	public void Solo_letras(JTextField input) {
-		input.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(input.getName());
-				char c = e.getKeyChar();
-				if (Character.isDigit(c)) {
-					e.consume();
-				}
-			}
-		});
-	}
-
-	public void Solo_numeros(JTextField input) {
-		input.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-				
-				/*if(e.getComponent()){
-					
-				}*/
-				char c = e.getKeyChar();
-				if (!Character.isDigit(c)) {
-					e.consume();
-				}
-			}
-		});
-	}
-
-	public void validarVacio(JTextField inputpresholder) {
-		inputpresholder.addFocusListener(new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				
-				if (inputpresholder.getText().equals("Falta este campo")) {
-					inputpresholder.setText("");
-				}
-				else
-				{
-					Border border = BorderFactory.createLineBorder(Color.GRAY);
-					inputpresholder.setBorder(border);
-					inputpresholder.setForeground(Color.BLACK);
-					
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (inputpresholder.getText().isEmpty() || inputpresholder.getText().equals("")) {
-					Border border = BorderFactory.createLineBorder(Color.RED);
-					inputpresholder.setForeground(Color.RED);
-					inputpresholder.setBorder(border);
-					inputpresholder.setForeground(Color.RED);
-					inputpresholder.setText("Falta este campo");
-				} else {
-					Border border = BorderFactory.createLineBorder(Color.GRAY);
-					inputpresholder.setBorder(border);
-					inputpresholder.setForeground(Color.BLACK);
-				}
-			}
-		});
-
+	
+	public void validarInputs(){
+		//Solo letras
+		UtilsForms.Solo_letras(this.ventanapaciente.JTFApellidoPaciente);
+		UtilsForms.Solo_letras(this.ventanapaciente.JTFNombrePaciente);
+		UtilsForms.Solo_letras(this.ventanapaciente.JTFDireccionPaciente);
+		//Solo Numeros
+		UtilsForms.Solo_numeros(this.ventanapaciente.JTFNumeroDocumentoPaciente);
+		UtilsForms.Solo_numeros(this.ventanapaciente.JTFIdPaciente);
+		UtilsForms.Solo_numeros(this.ventanapaciente.JTFPesoPaciente);
+		UtilsForms.Solo_numeros(this.ventanapaciente.JTFTelefonoPaciente);
+		//Validar si vacio
+		UtilsForms.validarVacio(this.ventanapaciente.JTFApellidoPaciente);
+		UtilsForms.validarVacio(this.ventanapaciente.JTFNombrePaciente);
+		UtilsForms.validarVacio(this.ventanapaciente.JTFDireccionPaciente);
+		UtilsForms.validarVacio(this.ventanapaciente.JTFNumeroDocumentoPaciente);
+		UtilsForms.validarVacio(this.ventanapaciente.JTFIdPaciente);
+		UtilsForms.validarVacio(this.ventanapaciente.JTFPesoPaciente);
+		UtilsForms.validarVacio(this.ventanapaciente.JTFTelefonoPaciente);
 	}
 
 }

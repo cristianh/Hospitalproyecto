@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import eam.desarollo.hospital.utils.UtilsForms;
 import eam.desarollo.hospital.vistas.VentanaCita;
 import eam.desarrollo.hospital.DAO.DAOCita;
 import eam.desarrollo.hospital.DAO.DAOConsultorio;
@@ -67,7 +68,7 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 		listarMedicos();
 		listarConsultorios();
 		listenerbotones();
-
+		validarInputs();
 	}
 
 	private void listenerbotones() {
@@ -358,6 +359,11 @@ public class controladorCita implements ActionListener, MouseListener, ItemListe
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void validarInputs(){
+		//Solo Numeros
+		UtilsForms.Solo_numeros(this.ventanacita.JTFDocumentoPaciente);
 	}
 
 }

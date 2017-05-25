@@ -16,6 +16,7 @@ import org.w3c.dom.events.MouseEvent;
 
 import com.mysql.jdbc.Connection;
 
+import eam.desarollo.hospital.utils.UtilsForms;
 import eam.desarollo.hospital.vistas.VentanaConsultorio;
 import eam.desarrollo.hospital.DAO.DAOConsultorio;
 import eam.desarrollo.hospital.conexion.Conexion;
@@ -43,6 +44,7 @@ public class controladorConsultorio implements ActionListener,MouseListener {
 		listarEstado();
 		listenerbotones();
 		CargarTabla();
+		validarInputs();
 
 	}
 	
@@ -263,6 +265,12 @@ public class controladorConsultorio implements ActionListener,MouseListener {
 	public void mouseReleased(java.awt.event.MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void validarInputs(){
+		//Solo Numeros
+		UtilsForms.Solo_letras(this.ventanaconsultorio.JTFConsultorio);
+		//UtilsForms.Solo_letrasTexPane(this.ventanaconsultorio.textPane);
 	}
 
 }

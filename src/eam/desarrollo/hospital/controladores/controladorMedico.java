@@ -27,6 +27,7 @@ import javax.swing.border.Border;
 
 import com.mysql.jdbc.Connection;
 
+import eam.desarollo.hospital.utils.UtilsForms;
 import eam.desarollo.hospital.vistas.VentanaMedico;
 import eam.desarrollo.hospital.DAO.DAOMedico;
 import eam.desarrollo.hospital.conexion.Conexion;
@@ -57,6 +58,7 @@ public class controladorMedico  implements ActionListener{
 	public DAOMedico Midao = new DAOMedico();
 	public ArrayList<Tipodocumento> listaDoc;
 	public ArrayList<Medico> listaMedico;
+	public UtilsForms ultisforms = new UtilsForms();
 	
 	
 	public controladorMedico(VentanaMedico ventanamedico) {
@@ -64,6 +66,7 @@ public class controladorMedico  implements ActionListener{
 		this.ventanamedico = ventanamedico;
 		listenerbotones();
 		listarTipoDocumento();
+		validarInputs();
 	}
 
 
@@ -75,25 +78,6 @@ public class controladorMedico  implements ActionListener{
 		this.ventanamedico.btnEliminar.addActionListener(this);
 		this.ventanamedico.btnActualizar.addActionListener(this);
 		this.ventanamedico.JBTReporte.addActionListener(this);
-		Solo_letras(this.ventanamedico.JTFNombremedico);
-		Solo_letras(this.ventanamedico.JTFApellidomedico);
-		
-		
-		Solo_numeros(this.ventanamedico.JTFIdmedico);
-		Solo_numeros(this.ventanamedico.JTFNumerodocumento);
-		Solo_numeros(this.ventanamedico.JTFTelefonoemergencia);
-		Solo_numeros(this.ventanamedico.JTFTelefonomedico);
-		
-		validarVacio(ventanamedico.JTFIdmedico);
-		validarVacio(ventanamedico.JTFNombremedico);
-		validarVacio(ventanamedico.JTFApellidomedico);
-		validarVacio(ventanamedico.JTFDireccionmedico);
-		validarVacio(ventanamedico.JTFNumerodocumento);
-		validarVacio(ventanamedico.JTFTelefonoemergencia);
-		validarVacio(ventanamedico.JTFTelefonomedico);
-		validarVacio(ventanamedico.JTFEmailmedico);
-		
-		validaremail(ventanamedico.JTFEmailmedico.getText());
 	}
 	
 	public void CargarformularioMedico(Medico medico) {
@@ -335,83 +319,6 @@ public class controladorMedico  implements ActionListener{
 		}
 	}
 	
-	public Boolean validaremail(String email) {
-		String pattheremail = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-		// Compiles the given regular expression into a pattern.
-		Pattern pattern = Pattern.compile(pattheremail);
-
-		// Match the given input against this pattern
-		Matcher matcher = pattern.matcher(email);
-		return matcher.matches();
-	}
-
-	public void Solo_letras(JTextField input) {
-		input.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(input.getName());
-				char c = e.getKeyChar();
-				if (Character.isDigit(c)) {
-					e.consume();
-				}
-			}
-		});
-	}
-
-	public void Solo_numeros(JTextField input) {
-		input.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-				
-				/*if(e.getComponent()){
-					
-				}*/
-				char c = e.getKeyChar();
-				if (!Character.isDigit(c)) {
-					e.consume();
-				}
-			}
-		});
-	}
-
-	public void validarVacio(JTextField inputpresholder) {
-		inputpresholder.addFocusListener(new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				
-				if (inputpresholder.getText().equals("Falta este campo")) {
-					inputpresholder.setText("");
-				}
-				else
-				{
-					Border border = BorderFactory.createLineBorder(Color.GRAY);
-					inputpresholder.setBorder(border);
-					inputpresholder.setForeground(Color.BLACK);
-					
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (inputpresholder.getText().isEmpty() || inputpresholder.getText().equals("")) {
-					Border border = BorderFactory.createLineBorder(Color.RED);
-					inputpresholder.setForeground(Color.RED);
-					inputpresholder.setBorder(border);
-					inputpresholder.setForeground(Color.RED);
-					inputpresholder.setText("Falta este campo");
-				} else {
-					Border border = BorderFactory.createLineBorder(Color.GRAY);
-					inputpresholder.setBorder(border);
-					inputpresholder.setForeground(Color.BLACK);
-				}
-			}
-		});
-
-	}
 	
 	public void listarTipoDocumento() {
 		listaDoc = Midao.listarDocumento();
@@ -420,6 +327,29 @@ public class controladorMedico  implements ActionListener{
 			String item = listaDoc.get(i).getTipoDocumento();
 			ventanamedico.JCBTipodocumentomedico.addItem(item);
 		}
+	}
+	
+	public void validarInputs(){
+		
+		UtilsForms.Solo_letras(this.ventanamedico.JTFNombremedico);
+		UtilsForms.Solo_letras(this.ventanamedico.JTFApellidomedico);
+		//Valicar Letras
+		UtilsForms.Solo_numeros(this.ventanamedico.JTFIdmedico);
+		UtilsForms.Solo_numeros(this.ventanamedico.JTFNumerodocumento);
+		UtilsForms.Solo_numeros(this.ventanamedico.JTFTelefonoemergencia);
+		UtilsForms.Solo_numeros(this.ventanamedico.JTFTelefonomedico);
+		//Validar si vacio
+		UtilsForms.validarVacio(ventanamedico.JTFIdmedico);
+		UtilsForms.validarVacio(ventanamedico.JTFNombremedico);
+		UtilsForms.validarVacio(ventanamedico.JTFApellidomedico);
+		UtilsForms.validarVacio(ventanamedico.JTFDireccionmedico);
+		UtilsForms.validarVacio(ventanamedico.JTFNumerodocumento);
+		UtilsForms.validarVacio(ventanamedico.JTFTelefonoemergencia);
+		UtilsForms.validarVacio(ventanamedico.JTFTelefonomedico);
+		UtilsForms.validarVacio(ventanamedico.JTFEmailmedico);
+		//Validar email
+		UtilsForms.validaremail(ventanamedico.JTFEmailmedico.getText());
+	
 	}
 
 }

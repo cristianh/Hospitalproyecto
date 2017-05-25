@@ -5,3 +5,5 @@
 /junit-4.6.jar
 /mysql-connector-java-3.0.17-ga-bin.jar
 /co/
+/com.fasterxml.jackson.core.jar
+/com.fasterxml.jackson.databind.jar
