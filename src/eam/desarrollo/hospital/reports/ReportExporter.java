@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -32,11 +35,15 @@ public class ReportExporter {
 				/**
 				 * 2- export to HTML
 				 */
-				JasperExportManager.exportReportToHtmlFile(printFileName,folderPath+"/reportePaciente2.html");
+				JasperExportManager.exportReportToHtmlFile(printFileName,folderPath+"/ReporteMedico2.html");
 
 			}
 		} catch (JRException e) {
 			e.printStackTrace();
+		}
+		finally{
+			JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+			JOptionPane.showMessageDialog(frame, "Reporte generado con exito: \n\n Ruta: \n " +  folderPath + "\n", "Info", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 	}
