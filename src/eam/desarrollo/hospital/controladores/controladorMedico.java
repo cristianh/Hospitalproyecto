@@ -8,6 +8,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +38,17 @@ import eam.desarrollo.hospital.entidades.Medico;
 import eam.desarrollo.hospital.entidades.Tipodocumento;
 import eam.desarrollo.hospital.reports.ReportExporter;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class controladorMedico  implements ActionListener{
 
@@ -235,10 +246,10 @@ public class controladorMedico  implements ActionListener{
 			
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int userSelection = fileChooser.showSaveDialog(ventanamedico.frmMedico);
-			 
+			File fileToSave = fileChooser.getSelectedFile();
 			if (userSelection == JFileChooser.APPROVE_OPTION) {
-			    File fileToSave = fileChooser.getSelectedFile();
-			    try {
+				
+				try {
 			    	Medico medico = null;
 			    	Tipodocumento tipodoc = null;
 			    	java.sql.ResultSet rs = null;
@@ -279,7 +290,7 @@ public class controladorMedico  implements ActionListener{
 								
 //					FIN
 					ReportExporter reportExporter = new ReportExporter();
-					reportExporter.export("ReporteMedicos.jasper", fileToSave.getAbsolutePath(), parameters,listMed);
+					reportExporter.export("ReporteMedicos2.jasper", fileToSave.getAbsolutePath(), parameters,listMed);
 
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -288,6 +299,36 @@ public class controladorMedico  implements ActionListener{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				
+			    /*try {
+			    	Connection con = Conexion.getConexion();
+			    	String sourceFileXml = "C:/Users/Casa1/Documents/GitHub/Hospitalproyecto/src/reportes/ReporteMedicos2.jrxml";
+					String sql = "SELECT  m.id_medico,m.nombre_medico,m.apellido_medico,m.telefono_medico,m.direccion_medico,m.email_medico,m.telefono_emergencia_medico,m.fecha_nacimiento_medico,m.numero_documento_medico,t.id_tipo_documento,t.tipo_documento from medico as m "
+							+ "join tipodocumento as t on t.id_tipo_documento = m.id_tipo_documento";
+				    String con_where;
+				    String class_source="/Medico/";
+				    Map paremetersMap= new HashMap();
+				    InputStream is = getClass().getResourceAsStream(sourceFileXml);
+				    
+				    JRDesignQuery jrDesingQuery = new JRDesignQuery();
+				    jrDesingQuery.setText(sql);
+				    
+				    JasperDesign jasperDesing= JRXmlLoader.load(is);
+				    jasperDesing.setQuery(jrDesingQuery);
+					JasperReport jaspertReport = JasperCompileManager.compileReport(jasperDesing);
+					JasperPrint jasperprint = JasperFillManager.fillReport(jaspertReport, paremetersMap,con);
+					JasperViewer.viewReport(jasperprint,false);
+					JasperExportManager.exportReportToPdfFile(jasperprint,fileToSave.getAbsolutePath());
+					
+				} catch (JRException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
+			   
 			}
 			break;
 

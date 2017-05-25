@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteMedicos2" pageWidth="1150" pageHeight="842" columnWidth="1110" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="31b19a38-a2ae-4104-965e-077fcee3d05d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     medico.`id_tipo_documento` AS medico_id_tipo_documento,
+     medico.`numero_documento_medico` AS medico_numero_documento_medico,
+     medico.`fecha_nacimiento_medico` AS medico_fecha_nacimiento_medico,
+     medico.`telefono_emergencia_medico` AS medico_telefono_emergencia_medico,
+     medico.`email_medico` AS medico_email_medico,
+     medico.`direccion_medico` AS medico_direccion_medico,
+     medico.`telefono_medico` AS medico_telefono_medico,
+     medico.`apellido_medico` AS medico_apellido_medico,
+     medico.`id_medico` AS medico_id_medico
+FROM
+     `hospital`.`medico` medico]]>
+	</queryString>
+	<field name="nombreMedico" class="java.lang.String"/>
+	<field name="apellidoMedico" class="java.lang.String"/>
+	<field name="telefonoMedico" class="java.lang.String"/>
+	<field name="direccionMedico" class="java.lang.String"/>
+	<field name="emailMedico" class="java.lang.String"/>
+	<field name="telefonoEmergenciaMedico" class="java.lang.String"/>
+	<field name="fechaNacimientoMedico" class="java.util.Date"/>
+	<field name="idMedico" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="138" height="20" uuid="d307c152-92db-48a0-9087-3d5153120e37"/>
+				<text><![CDATA[nombreMedico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="0" width="138" height="20" uuid="3c41f257-aa8d-49fb-b9aa-476d713d95f9"/>
+				<text><![CDATA[apellidoMedico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="0" width="138" height="20" uuid="466b22f6-7592-4fc9-8d7f-d9929ca50b6d"/>
+				<text><![CDATA[telefonoMedico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="0" width="138" height="20" uuid="b6365149-1ee5-4510-9ea7-4eb18ae65f3c"/>
+				<text><![CDATA[direccionMedico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="552" y="0" width="138" height="20" uuid="7a3969f8-6e7f-45d4-b6f8-f468f46a569f"/>
+				<text><![CDATA[emailMedico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="690" y="0" width="138" height="20" uuid="cd1ab827-ce51-4624-a9c4-e9bf94fa8083"/>
+				<text><![CDATA[telefonoEmergenciaMedico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="828" y="0" width="138" height="20" uuid="fce3ce53-41e2-4998-a910-af0e0edd6a09"/>
+				<text><![CDATA[fechaNacimientoMedico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="966" y="0" width="138" height="20" uuid="ace6fd13-9028-410d-9759-375618d12b32"/>
+				<text><![CDATA[idMedico]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="138" height="20" uuid="558cc86d-6609-4796-89d1-f78863ad0012"/>
+				<textFieldExpression><![CDATA[$F{nombreMedico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="0" width="138" height="20" uuid="4cbe964b-47fa-49bc-bc3f-b3151344915a"/>
+				<textFieldExpression><![CDATA[$F{apellidoMedico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="138" height="20" uuid="271020ea-50d4-4a5f-a753-85700da8bac5"/>
+				<textFieldExpression><![CDATA[$F{telefonoMedico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="138" height="20" uuid="191d9a76-289a-4c5c-89df-0dda71b550db"/>
+				<textFieldExpression><![CDATA[$F{direccionMedico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="552" y="0" width="138" height="20" uuid="b630c449-b93f-4a66-bcd1-d667122a0bcb"/>
+				<textFieldExpression><![CDATA[$F{emailMedico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="690" y="0" width="138" height="20" uuid="7e41f579-4f78-4411-a37f-d8a18c803251"/>
+				<textFieldExpression><![CDATA[$F{telefonoEmergenciaMedico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="828" y="0" width="138" height="20" uuid="5f2e511d-38ff-4a2b-95a1-e7b8665a3423"/>
+				<textFieldExpression><![CDATA[$F{fechaNacimientoMedico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="966" y="0" width="138" height="20" uuid="becdedde-c789-4f26-8acd-615cd40ecf34"/>
+				<textFieldExpression><![CDATA[$F{idMedico}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
