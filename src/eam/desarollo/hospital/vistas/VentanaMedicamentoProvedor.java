@@ -41,6 +41,7 @@ public class VentanaMedicamentoProvedor {
 	 */
 	public VentanaMedicamentoProvedor() {
 		initialize();
+		micontroladormedicamentoproveedor= new controladorMedicamentoProveedor(this);
 	}
 
 	/**

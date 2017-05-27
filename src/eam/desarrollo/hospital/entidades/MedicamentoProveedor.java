@@ -1,4 +1,4 @@
-package eam.desarrollo.entidades;
+package eam.desarrollo.hospital.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -32,10 +32,16 @@ public class MedicamentoProveedor implements Serializable {
 	/** medicamento. */
 	private Medicamento medicamento;
 
-	/**
-	 * Constructor.
-	 */
-	public MedicamentoProveedor() {
+	
+	public MedicamentoProveedor(String idMedicamentoProveedor, Integer cantidadMedicamento, String loteMedicamento,
+			Date fechaVencimento, Proveedor proveedor, Medicamento medicamento) {
+		super();
+		this.idMedicamentoProveedor = idMedicamentoProveedor;
+		this.cantidadMedicamento = cantidadMedicamento;
+		this.loteMedicamento = loteMedicamento;
+		this.fechaVencimento = fechaVencimento;
+		this.proveedor = proveedor;
+		this.medicamento = medicamento;
 	}
 
 	/**

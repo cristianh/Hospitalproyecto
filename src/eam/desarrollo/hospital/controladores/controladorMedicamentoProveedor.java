@@ -3,8 +3,10 @@ package eam.desarrollo.hospital.controladores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import eam.desarollo.hospital.vistas.VentanaMedicamentoProvedor;
 import eam.desarrollo.hospital.entidades.Cama;
@@ -57,26 +59,28 @@ public class controladorMedicamentoProveedor implements ActionListener {
 		case "REGISTRAR":
 			if (verificarformulario()) {
 
-				String proveedor = ventanamedicamentoproveedor.JCBProveedor.getSelectedItem().toString();
-
+				
 				String id = ventanamedicamentoproveedor.JTFId.getText();
 				String lote=ventanamedicamentoproveedor.JTFLote.getText();
-				String cantidad=ventanamedicamentoproveedor.JTFCantidad.getText();
+				Integer cantidad=Integer.parseInt(ventanamedicamentoproveedor.JTFCantidad.getText());
 				String medicamento= ventanamedicamentoproveedor.JCBMedicamento.getSelectedItem().toString();
-				estado_cama = new EstadoCama(
-						Integer.toString(ventanacama.JCBEstado.getSelectedIndex()), estado);
-				habitacion = new Habitacion(Integer.toString(ventanacama.JCBHabitacion.getSelectedIndex()),habitaciones,null);
+				
+				String proveedor = ventanamedicamentoproveedor.JCBProveedor.getSelectedItem().toString();
+				Date fechavencimiento = ventanamedicamentoproveedor.dateChooser.getDate();
+				Medicamento medicamentos = new Medicamento(
+						Integer.toString(ventanamedicamentoproveedor.JCBMedicamento.getSelectedIndex()), medicamento,null,null);
+				Proveedor proveedores = new Proveedor(Integer.toString(ventanamedicamentoproveedor.JCBProveedor.getSelectedIndex()),proveedor,null,null,null,null);
+				nuevo_medicamento_proveedor = new MedicamentoProveedor(id,cantidad,lote,fechavencimiento,proveedores,medicamentos);
 						
-				nueva_cama = new Cama(id,estado_cama,habitacion);
-				System.out.println(nueva_cama.getIdCama());
+				
 
 				try {
-					Midao.crear(nueva_cama);
+					Midao.crear(nuevo_medicamento_proveedor);
 				} catch (Exception e1) {
 
 				}
-				ventanacama.JCBEstado.setSelectedIndex(0);
-				// ventanapaciente.dateChooser.setDate(null);
+				
+				
 				Limpiarformulario();
 				
 			} else {
@@ -85,67 +89,72 @@ public class controladorMedicamentoProveedor implements ActionListener {
 			}
 
 			break;
+		
 
 		case "ELIMINAR":
 			try {
 				if (!verificarVacio()) {
-					Midao.eliminar(ventanacama.JTFId.getText());
-					ventanacama.JCBEstado.setSelectedIndex(0);
-					ventanacama.JCBHabitacion.setSelectedIndex(0);
-			
+					Midao.eliminar(ventanamedicamentoproveedor.JTFId.getText());
 					Limpiarformulario();
-					JOptionPane.showMessageDialog(null, "Cama eliminada", "Info",
+					JOptionPane.showMessageDialog(null, "Medicamento eliminado", "Info",
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					JOptionPane.showMessageDialog(null, "Llene el campo requerido");
 				}
 
-			} catch (Exception e) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
 
 			break;
+			
 
 		case "ACTUALIZAR":
-			String estado = ventanacama.JCBEstado.getSelectedItem().toString();
-			String habitaciones= ventanacama.JCBHabitacion.getSelectedItem().toString();
-			String id = ventanacama.JTFId.getText();
+			String id = ventanamedicamentoproveedor.JTFId.getText();
+			String lote=ventanamedicamentoproveedor.JTFLote.getText();
+			Integer cantidad=Integer.parseInt(ventanamedicamentoproveedor.JTFCantidad.getText());
+			String medicamento= ventanamedicamentoproveedor.JCBMedicamento.getSelectedItem().toString();
 			
-			
-			estado_cama = new EstadoCama(Integer.toString(ventanacama.JCBEstado.getSelectedIndex()),
-					estado);
-			habitacion = new Habitacion(Integer.toString(ventanacama.JCBHabitacion.getSelectedIndex()),habitaciones,null);
-			
-			nueva_cama = new Cama(id,estado_cama,habitacion);
+			String proveedor = ventanamedicamentoproveedor.JCBProveedor.getSelectedItem().toString();
+			Date fechavencimiento = ventanamedicamentoproveedor.dateChooser.getDate();
+			Medicamento medicamentos = new Medicamento(
+					Integer.toString(ventanamedicamentoproveedor.JCBMedicamento.getSelectedIndex()), medicamento,null,null);
+			Proveedor proveedores = new Proveedor(Integer.toString(ventanamedicamentoproveedor.JCBProveedor.getSelectedIndex()),proveedor,null,null,null,null);
+			nuevo_medicamento_proveedor = new MedicamentoProveedor(id,cantidad,lote,fechavencimiento,proveedores,medicamentos);
 			try {
-				Midao.actualizar(nueva_cama);
-				ventanacama.JCBEstado.setSelectedIndex(0);
+				Midao.actualizar(nuevo_medicamento_proveedor);
+			
 				Limpiarformulario();
-				JOptionPane.showMessageDialog(null, "Cama actualizada", "Info", JOptionPane.INFORMATION_MESSAGE);
-			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Medicamento actualizado", "Info", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
 
 			break;
 			
 		case "BUSCAR":
 			try {
-				nueva_cama = Midao.buscar(ventanacama.JTFId.getText());
-				if (nueva_cama != null) {
-					ventanacama.JCBEstado.setSelectedIndex(
-							Integer.parseInt(nueva_cama.getEstadoCama().getIdEstadoCama()));
-					ventanacama.JCBHabitacion.setSelectedIndex(Integer.parseInt(nueva_cama.getHabitacion().getIdHabitacion()));
+				nuevo_medicamento_proveedor=Midao.buscar(ventanamedicamentoproveedor.JTFId.getText());
+				
+				if (nuevo_medicamento_proveedor != null) {
 					
-					JOptionPane.showMessageDialog(null, "Cama encontrada", "Info", JOptionPane.INFORMATION_MESSAGE);
+					ventanamedicamentoproveedor.JTFCantidad.setText(Integer.toString(nuevo_medicamento_proveedor.getCantidadMedicamento()));
+					ventanamedicamentoproveedor.JTFLote.setText(nuevo_medicamento_proveedor.getLoteMedicamento());
+					ventanamedicamentoproveedor.dateChooser.setDate(nuevo_medicamento_proveedor.getFechaVencimento());
+					ventanamedicamentoproveedor.JCBMedicamento.setSelectedIndex(
+							Integer.parseInt(nuevo_medicamento_proveedor.getMedicamento().getIdMedicamento()));
+					ventanamedicamentoproveedor.JCBProveedor.setSelectedIndex(Integer.parseInt(nuevo_medicamento_proveedor.getProveedor().getIdProveedor()));
+					
+					JOptionPane.showMessageDialog(null, "Medicamento encontrado", "Info", JOptionPane.INFORMATION_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(null, "Cama no encontrada", "Info",
+					JOptionPane.showMessageDialog(null, "Medicamento no encontrado", "Info",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
-			} catch (Exception e) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				System.out.println(e.getMessage());
+				System.out.println(e1.getMessage());
 			}
 			break;
 			/**
@@ -158,6 +167,22 @@ public class controladorMedicamentoProveedor implements ActionListener {
 			}
 			break;
 **/
+		}
+	}
+	public void listarMedicamento(){
+		listaMedicamento=Midao.listarMedicamento();
+		for(int i=0;i<listaMedicamento.size();i++){
+			String item=listaMedicamento.get(i).getNombreMedicamento();
+			ventanamedicamentoproveedor.JCBMedicamento.addItem(item);
+		}
+		
+	}
+	public void listarProveedor(){
+		listaProveedor=Midao.listarProveedor();
+		for(int i=0;i<listaProveedor.size();i++){
+			String item=listaProveedor.get(i).getEmpresa();
+			ventanamedicamentoproveedor.JCBProveedor.addItem(item);
+			
 		}
 	}
 	
@@ -177,5 +202,13 @@ public class controladorMedicamentoProveedor implements ActionListener {
 		return false;
 	}
 	
+	public void Limpiarformulario(){
+		this.ventanamedicamentoproveedor.JCBMedicamento.setSelectedIndex(0);
+		this.ventanamedicamentoproveedor.JCBProveedor.setSelectedIndex(0);
+		this.ventanamedicamentoproveedor.JTFId.setText("");
+		this.ventanamedicamentoproveedor.JTFLote.setText("");
+		this.ventanamedicamentoproveedor.JTFCantidad.setText("");
+		((JTextField) this.ventanamedicamentoproveedor.dateChooser.getDateEditor().getUiComponent()).setText("");
+	}
 
 }
